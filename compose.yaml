@@ -1,0 +1,85 @@
+﻿version: '3.8'
+
+services:
+  stock_service:
+    image: stockservice
+    container_name: stock_service_api
+    build:
+      context: .
+      dockerfile: StockService/Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=stock_service_db;Port=5432;Database=stock_db;Username=stockuser;Password=stockpass
+    depends_on:
+      stock_service_db:
+        condition: service_healthy
+    networks:
+      - microservice_net
+    restart: unless-stopped
+
+  stock_service_db:
+    image: postgres:16-alpine
+    container_name: stock_service_db
+    environment:
+      - POSTGRES_USER=stockuser
+      - POSTGRES_PASSWORD=stockpass
+      - POSTGRES_DB=stock_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - stock_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stockuser -d stock_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - microservice_net
+    restart: unless-stopped
+
+  billing_service:
+    image: billingservice
+    container_name: billing_service_api
+    build:
+      context: .
+      dockerfile: BillingService/Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=billing_service_db;Port=5432;Database=billing_db;Username=billinguser;Password=billingpass
+      # - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      billing_service_db:
+        condition: service_healthy
+    networks:
+      - microservice_net
+    restart: unless-stopped
+
+  billing_service_db:
+    image: postgres:15-alpine
+    container_name: billing_service_db
+    environment:
+      - POSTGRES_USER=billinguser
+      - POSTGRES_PASSWORD=billingpass
+      - POSTGRES_DB=billing_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - billing_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U billinguser -d billing_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - microservice_net
+    restart: unless-stopped
+
+volumes:
+  stock_data:
+  billing_data:
+
+networks:
+  microservice_net:
+    driver: bridge
