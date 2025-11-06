@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using StockService.Application.Common.Dtos;
+using StockService.Domain.ValueObjects;
 
 namespace StockService.Application.UseCases.DecreaseStockBalance;
 
 public class DecreaseStockBalanceCommand : IRequest<ApiResultDto<bool>>
 {
-    public Guid ProductId { get; init; }
-    public int QuantityUsed{ get; init; }
+    public ProductId Id { get; set; }
+    public int QuantityUsed { get; init; }
 }

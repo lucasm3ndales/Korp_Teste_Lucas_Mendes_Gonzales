@@ -14,7 +14,7 @@ public class DecreaseStockBalanceCommandHandler(
     {
         try
         {
-            var product = await productRepository.GetByProductId(request.ProductId, cancellationToken);
+            var product = await productRepository.GetById(request.Id, cancellationToken);
 
             if (product == null)
                 throw new ProductNotExistsException();

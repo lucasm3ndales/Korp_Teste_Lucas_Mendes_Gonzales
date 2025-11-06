@@ -19,13 +19,12 @@ public static class ProductEndpoints
         {
             var result = await mediator.Send(command);
             return Results.Created(
-                $"/api/products/{result.Data.ProductId}",
+                $"/api/products/{result.Data.Id}",
                 result
             );
         });
 
-        api.MapPost("/{id:guid}/stock/decrease", async (
-            Guid id,
+        api.MapPost("/stock/decrease", async (
             [FromBody] DecreaseStockBalanceCommand command,
             [FromServices] IMediator mediator) =>
         {
@@ -37,7 +36,7 @@ public static class ProductEndpoints
             Guid id,
             [FromServices] IMediator mediator) =>
         {
-            var query = new GetProductByProductIdQuery(id);
+            var query = new GetProductByIdQuery(id);
             return await mediator.Send(query);
         });
 

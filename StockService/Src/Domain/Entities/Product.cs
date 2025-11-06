@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using StockService.Domain.Exceptions;
+﻿using StockService.Domain.Exceptions;
+using StockService.Domain.ValueObjects;
 
 namespace StockService.Domain.Entities;
 
-public class Product
+public class Product: IEquatable<Product>
 {
-    public long Id { get; private set; }
-
-    public Guid ProductId { get; private set; }
+    public ProductId Id { get; private set; }
 
     public string Code { get; private set; }
 
@@ -34,7 +32,7 @@ public class Product
         if (initialStockBalance < 0)
             throw new InvalidProductStockBalanceException(initialStockBalance);
         
-        ProductId = Guid.NewGuid();
+        Id = ProductId.NewId();
         Code = code;
         Description = description;
         StockBalance = initialStockBalance;
@@ -53,5 +51,39 @@ public class Product
         }
         
         StockBalance -= quantityUsed;
+    }
+
+    public bool Equals(Product? other)
+    {
+        if (other is null)
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+        
+        return Id.Equals(other.Id);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Product);
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
+
+    public static bool operator ==(Product? left, Product? right)
+    {
+        if (left is null)
+            return right is null;
+        
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Product? left, Product? right)
+    {
+        return !(left == right);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockService.Application.Repositories;
 using StockService.Domain.Entities;
+using StockService.Domain.ValueObjects;
 using StockService.Infra.Data;
 
 namespace StockService.Infra.Repositories;
@@ -14,11 +15,11 @@ public class ProductRepository(
         await dbContext.Products.AddAsync(product, cancellationToken);
     }
 
-    public async Task<Product?> GetByProductId(Guid productId, CancellationToken cancellationToken)
+    public async Task<Product?> GetById(ProductId id, CancellationToken cancellationToken)
     {
         return await dbContext
             .Products.FirstOrDefaultAsync(
-                p => p.ProductId == productId,
+                p => p.Id == id,
                 cancellationToken
             );
     }
@@ -38,11 +39,11 @@ public class ProductRepository(
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<Product?> GetByProductIdNoTracked(Guid productId, CancellationToken cancellationToken)
+    public async Task<Product?> GetByProductIdNoTracked(ProductId id, CancellationToken cancellationToken)
     {
         return await dbContext.Products
             .AsNoTracking()
-            .Where(p => p.ProductId == productId)
+            .Where(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
     }
 

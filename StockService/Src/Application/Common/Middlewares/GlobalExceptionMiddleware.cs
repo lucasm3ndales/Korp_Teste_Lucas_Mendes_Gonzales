@@ -42,6 +42,7 @@ public class GlobalExceptionMiddleware(
                 apiResult = ApiResultDto<object>.Failure(exception.Message);
                 break;
 
+            case InvalidProductIdException:
             case InsufficientStockBalanceException:
             case InvalidProductCodeException:
             case InvalidProductDescriptionException:

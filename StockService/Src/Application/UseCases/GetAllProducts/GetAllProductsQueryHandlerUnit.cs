@@ -5,7 +5,7 @@ using StockService.Application.Repositories;
 
 namespace StockService.Application.UseCases.GetAllProducts;
 
-public class GetAllProductsQueryHandler(
+public class GetAllProductsQueryHandlerUnit(
     IProductRepository productRepository
 ) : IRequestHandler<GetAllProductsQuery, ApiResultDto<IEnumerable<ProductDto>>>
 {

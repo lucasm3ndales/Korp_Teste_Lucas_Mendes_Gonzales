@@ -1,7 +1,9 @@
-﻿namespace StockService.Application.Common.Dtos;
+﻿using StockService.Domain.ValueObjects;
+
+namespace StockService.Application.Common.Dtos;
 
 public record ProductDto(
-    Guid ProductId,
+    ProductId Id,
     string Code,
     string Description,
     int StockBalance,
