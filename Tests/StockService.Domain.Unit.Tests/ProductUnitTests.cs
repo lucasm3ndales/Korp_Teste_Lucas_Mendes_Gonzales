@@ -1,11 +1,11 @@
 ﻿using StockService.Domain.Entities;
 using StockService.Domain.Exceptions;
 
-namespace StockService.Domain.Tests;
+namespace StockService.Domain.Unit.Tests;
 
 public class ProductTests
 {
-    [Fact()]
+    [Fact(DisplayName = "Deve criar um produto quando os dados são válidos")]
     public void Should_CreateProduct_When_DataIsValid()
     {
         // Arrange
@@ -23,7 +23,7 @@ public class ProductTests
         Assert.Equal(initialStockBalance, product.StockBalance);
     }
     
-    [Theory()]
+    [Theory(DisplayName = "Deve lançar exceção quando o Código for nulo ou vazio")]
     [InlineData(null)]
     [InlineData(" ")]
     [InlineData("")]
@@ -33,7 +33,7 @@ public class ProductTests
         Assert.Throws<InvalidProductCodeException>(() => new Product(code!, "Café", 10));
     }
     
-    [Fact()]
+    [Fact(DisplayName = "Deve lançar exceção quando o Código for muito longo")]
     public void Should_Throw_InvalidProductCodeException_When_CodeIsTooLong()
     {
         // Arrange
@@ -43,7 +43,7 @@ public class ProductTests
         Assert.Throws<InvalidProductCodeException>(() => new Product(code, "Café", 10));
     }
     
-    [Theory()]
+    [Theory(DisplayName = "Deve lançar exceção quando a Descrição for nula ou vazia")]
     [InlineData(null)]
     [InlineData(" ")]
     [InlineData("")]
@@ -51,11 +51,11 @@ public class ProductTests
     {
         // Act & Assert
         Assert.Throws<InvalidProductDescriptionException>(() => 
-            new Product("LXT-123", invalidDescription, 10)
+            new Product("LXT-123", invalidDescription!, 10) // Adicionado '!' para suprimir aviso nulo
         );
     }
     
-    [Fact()]
+    [Fact(DisplayName = "Deve lançar exceção quando a Descrição for muito longa")]
     public void Should_Throw_InvalidProductStockBalanceException_When_DescriptionIsTooLong()
     {
         // Arrange
@@ -67,7 +67,7 @@ public class ProductTests
         );
     }
     
-    [Theory()]
+    [Theory(DisplayName = "Deve lançar exceção quando o Saldo Inicial for negativo")]
     [InlineData(-1)]
     public void Should_Throw_InvalidProductStockBalanceException_When_InitialStockBalanceIsNegative(int initialStockBalance)
     {
@@ -77,7 +77,7 @@ public class ProductTests
         );
     }
     
-    [Fact]
+    [Fact(DisplayName = "Deve atualizar o saldo ao diminuir uma quantidade válida")]
     public void Should_UpdateStockBalance_When_DecreasingValidQuantity()
     {
         // Arrange
@@ -90,7 +90,7 @@ public class ProductTests
         Assert.Equal(7, product.StockBalance);
     }
     
-    [Fact()]
+    [Fact(DisplayName = "Deve lançar exceção quando diminuir mais que o saldo disponível")]
     public void Should_Throw_InsufficientStockBalanceException_When_DecreasingMoreThanAvailable()
     {
         // Arrange
@@ -103,7 +103,7 @@ public class ProductTests
         );
     }
     
-    [Fact]
+    [Fact(DisplayName = "Deve lançar exceção quando diminuir uma quantidade negativa ou zero")]
     public void Should_Throw_InvalidStockBalanceQuantityException_When_DecreasingNegativeQuantity()
     {
         // Arrange
@@ -115,5 +115,4 @@ public class ProductTests
             product.DecreaseStockBalance(invalidQuantity)
         );
     }
-    
 }

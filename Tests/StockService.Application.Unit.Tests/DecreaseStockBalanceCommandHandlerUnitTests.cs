@@ -7,7 +7,7 @@ using StockService.Domain.Entities;
 using StockService.Domain.Exceptions;
 using StockService.Domain.ValueObjects;
 
-namespace StockService.Application.Tests;
+namespace StockService.Application.Unit.Tests;
 
 public class DecreaseStockBalanceCommandHandlerUnitTests
 {
@@ -20,7 +20,7 @@ public class DecreaseStockBalanceCommandHandlerUnitTests
         _handler = new DecreaseStockBalanceCommandHandler(_productRepositoryMock.Object);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve retornar sucesso quando o produto existe e o estoque é suficiente")]
     public async Task Should_ReturnSuccess_When_ProductExistsAndStockIsSufficient()
     {
         // Arrange
@@ -47,7 +47,7 @@ public class DecreaseStockBalanceCommandHandlerUnitTests
             It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve lançar ProductNotExistsException quando o produto não for encontrado")]
     public async Task Should_Throw_ProductNotExistsException_When_ProductIsNotFound()
     {
         // Arrange
@@ -70,7 +70,7 @@ public class DecreaseStockBalanceCommandHandlerUnitTests
             It.IsAny<CancellationToken>()), Times.Never);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve lançar InsufficientStockBalanceException quando o domínio rejeitar (estoque insuficiente)")]
     public async Task Should_Throw_InsufficientStockBalanceException_When_DomainThrowsIt()
     {
         // Arrange
@@ -94,7 +94,7 @@ public class DecreaseStockBalanceCommandHandlerUnitTests
             It.IsAny<CancellationToken>()), Times.Never);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve lançar StockConcurrencyException quando ocorrer um DbUpdateConcurrencyException")]
     public async Task Should_Throw_StockConcurrencyException_When_DbUpdateConcurrencyOccurs()
     {
         // Arrange

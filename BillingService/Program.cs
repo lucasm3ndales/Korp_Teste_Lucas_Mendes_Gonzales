@@ -1,6 +1,10 @@
 using System.Reflection;
+using BillingService.Application.Common.Middlewares;
+using BillingService.Config;
+using BillingService.Infra.Data;
 using BillingService.Presentation;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -32,9 +36,9 @@ try
 
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-    // builder.Services.AddDbContext<StockDbContext>(options =>
-    //     options.UseNpgsql(connectionString)
-    // );
+    builder.Services.AddDbContext<BillingDbContext>(options =>
+        options.UseNpgsql(connectionString)
+    );
     
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)
@@ -42,11 +46,16 @@ try
 
     TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
     
+    builder.Services.ConfigureHttpJsonOptions(options =>
+    {
+        options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonContext.Default);
+    });
+    
     var app = builder.Build();
 
     app.UseSerilogRequestLogging();
 
-    // app.UseMiddleware<GlobalExceptionMiddleware>();
+    app.UseMiddleware<GlobalExceptionMiddleware>();
 
     app.UseHttpsRedirection();
     app.UseCors("AllowAll");
@@ -63,3 +72,5 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+public partial class Program() {}

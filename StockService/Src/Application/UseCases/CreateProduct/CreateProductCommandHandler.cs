@@ -7,7 +7,7 @@ using StockService.Domain.Entities;
 
 namespace StockService.Application.UseCases.CreateProduct;
 
-public class CreateProductCommandHandlerUnit(
+public class CreateProductCommandHandler(
     IProductRepository productRepository
 ) : IRequestHandler<CreateProductCommand, ApiResultDto<ProductDto>>
 {

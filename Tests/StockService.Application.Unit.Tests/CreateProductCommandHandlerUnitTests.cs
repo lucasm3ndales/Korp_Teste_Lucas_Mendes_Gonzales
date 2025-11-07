@@ -6,30 +6,25 @@ using StockService.Application.UseCases.CreateProduct;
 using StockService.Domain.Entities;
 using StockService.Domain.Exceptions;
 
-namespace StockService.Application.Tests;
+namespace StockService.Application.Unit.Tests;
 
 public class CreateProductCommandHandlerUnitTests
 {
     private readonly Mock<IProductRepository> _productRepositoryMock;
-    private readonly CreateProductCommandHandlerUnit _handlerUnit;
+    private readonly CreateProductCommandHandler _handler;
 
     public CreateProductCommandHandlerUnitTests()
     {
         _productRepositoryMock = new Mock<IProductRepository>();
-        _handlerUnit = new CreateProductCommandHandlerUnit(_productRepositoryMock.Object);
-        TypeAdapterConfig.GlobalSettings.Scan(typeof(CreateProductCommandHandlerUnit).Assembly);
+        _handler = new CreateProductCommandHandler(_productRepositoryMock.Object);
+        TypeAdapterConfig.GlobalSettings.Scan(typeof(CreateProductCommandHandler).Assembly);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve retornar sucesso quando o código for único")]
     public async Task Should_ReturnSuccess_When_CodeIsUnique()
     {
         // Arrange
-        var command = new CreateProductCommand
-        {
-            Code = "HCL-123",
-            Description = "Café",
-            InitialStockBalance = 10
-        };
+        var command = new CreateProductCommand("HCL-123", "Café", 10);
 
         _productRepositoryMock
             .Setup(r =>
@@ -40,7 +35,7 @@ public class CreateProductCommandHandlerUnitTests
             .ReturnsAsync((Product)null!);
 
         // Act
-        var result = await _handlerUnit.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -55,16 +50,11 @@ public class CreateProductCommandHandlerUnitTests
             It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve lançar ProductCodeAlreadyExistsException quando o código já existir")]
     public async Task Should_Throw_ProductCodeAlreadyExistsException_When_CodeAlreadyExists()
     {
         // Arrange
-        var command = new CreateProductCommand
-        {
-            Code = "HCL-123",
-            Description = "Café",
-            InitialStockBalance = 10
-        };
+        var command = new CreateProductCommand("HCL-123", "Café", 10);
 
         var existingProduct = new Product("HCL-123", "Café", 5);
 
@@ -75,7 +65,7 @@ public class CreateProductCommandHandlerUnitTests
 
         // Act & Assert
         await Assert.ThrowsAsync<ProductCodeAlreadyExistsException>(() =>
-            _handlerUnit.Handle(command, CancellationToken.None));
+            _handler.Handle(command, CancellationToken.None));
 
         _productRepositoryMock.Verify(r => r.Add(
             It.IsAny<Product>(),
@@ -85,16 +75,12 @@ public class CreateProductCommandHandlerUnitTests
             It.IsAny<CancellationToken>()), Times.Never);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve lançar DomainException quando a criação do produto falhar (ex: saldo negativo)")]
     public async Task Should_Throw_DomainException_When_ProductCreationFails()
     {
         // Arrange
-        var command = new CreateProductCommand
-        {
-            Code = "HCL-123",
-            Description = "Café",
-            InitialStockBalance = -1
-        };
+        var command = new CreateProductCommand("HCL-123", "Café", -1);
+
 
         _productRepositoryMock.Setup(r => r.GetByCode(
                 command.Code,
@@ -103,7 +89,7 @@ public class CreateProductCommandHandlerUnitTests
 
         // Act & Assert
         await Assert.ThrowsAsync<InvalidProductStockBalanceException>(() =>
-            _handlerUnit.Handle(command, CancellationToken.None));
+            _handler.Handle(command, CancellationToken.None));
 
         _productRepositoryMock.Verify(r => r.Add(
             It.IsAny<Product>(),

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService", "StockService\StockService.csproj", "{C6E24C9A-3041-4BA0-80FB-CA5A9EA16E61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8209CE4-AFF6-4AFA-A7AA-D2F15A5A2E3D}"
@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{83AFA823
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Api.E2E.Tests", "tests\StockService.Api.E2E.Tests\StockService.Api.E2E.Tests.csproj", "{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Domain.Tests", "Tests\StockService.Domain.Tests\StockService.Domain.Tests.csproj", "{5D4B1671-F305-415E-82CE-61F159E96E7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Domain.Unit.Tests", "Tests\StockService.Domain.Unit.Tests\StockService.Domain.Unit.Tests.csproj", "{5D4B1671-F305-415E-82CE-61F159E96E7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Application.Tests", "Tests\StockService.Application.Tests\StockService.Application.Tests.csproj", "{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Application.Unit.Tests", "Tests\StockService.Application.Unit.Tests\StockService.Application.Unit.Tests.csproj", "{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,9 +4,9 @@ using StockService.Application.Common.Dtos;
 using StockService.Application.Common.Exceptions;
 using StockService.Application.Repositories;
 
-namespace StockService.Application.UseCases.GetProductByProductId;
+namespace StockService.Application.UseCases.GetProductById;
 
-public class GetProductByIdQueryHandlerUnit(
+public class GetProductByIdQueryHandler(
     IProductRepository productRepository
 ) : IRequestHandler<GetProductByIdQuery, ApiResultDto<ProductDto>>
 {

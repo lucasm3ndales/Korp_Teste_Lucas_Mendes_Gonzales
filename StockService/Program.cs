@@ -7,6 +7,7 @@ using StockService.Infra.Repositories;
 using StockService.Presentation;
 using System.Reflection;
 using Serilog;
+using StockService.Config;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -49,6 +50,11 @@ try
 
     TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
     
+    builder.Services.ConfigureHttpJsonOptions(options =>
+    {
+        options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonContext.Default);
+    });
+    
     var app = builder.Build();
 
     app.UseSerilogRequestLogging();
@@ -70,3 +76,5 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+public partial class Program() {}

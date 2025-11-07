@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StockService.Application.UseCases.CreateProduct;
 using StockService.Application.UseCases.DecreaseStockBalance;
 using StockService.Application.UseCases.GetAllProducts;
-using StockService.Application.UseCases.GetProductByProductId;
+using StockService.Application.UseCases.GetProductById;
 
 namespace StockService.Presentation;
 

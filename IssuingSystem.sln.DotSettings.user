@@ -11,5 +11,7 @@
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Tests.GetAllProductsQueryHandlerUnitTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Tests.GetProductByIdQueryHandlerUnitTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Tests.DecreaseStockBalanceCommandHandlerUnitTests.Should_Throw_StockConcurrencyException_When_DbUpdateConcurrencyOccurs&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7::net8.0::StockService.Api.E2E.Tests.Endpoints.CreateProductE2ETests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7::net8.0::StockService.Api.E2E.Tests.Endpoints.Product.CreateProductE2ETests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

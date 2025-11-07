@@ -1,11 +1,11 @@
 ﻿using StockService.Domain.Exceptions;
 using StockService.Domain.ValueObjects;
 
-namespace StockService.Domain.Tests;
+namespace StockService.Domain.Unit.Tests;
 
 public class ProductIdTests
 {
-    [Fact]
+    [Fact(DisplayName = "Deve lançar InvalidProductIdException quando o valor for um Guid vazio")]
     public void Should_Throw_InvalidProductIdException_When_ValueIsGuidEmpty()
     {
         // Arrange
@@ -14,11 +14,11 @@ public class ProductIdTests
         // Act & Assert
         Assert.Throws<InvalidProductIdException>(() =>
         {
-            ProductId id = emptyGuid; 
+            ProductId id = emptyGuid;
         });
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve criar um ProductId válido ao chamar NewId")]
     public void Should_CreateValidProductId_When_CallingNewId()
     {
         // Arrange
@@ -32,7 +32,7 @@ public class ProductIdTests
         Assert.NotEqual(Guid.Empty, productId.Value);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve ser igual ao comparar duas instâncias com o mesmo Guid")]
     public void Should_BeEqual_When_ComparingTwoInstancesWithSameGuid()
     {
         // Arrange
@@ -48,7 +48,7 @@ public class ProductIdTests
         Assert.True(areEqual);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Não deve ser igual ao comparar dois ProductIds diferentes")]
     public void Should_NotBeEqual_When_ComparingTwoDifferentIds()
     {
         // Arrange
@@ -62,8 +62,8 @@ public class ProductIdTests
         Assert.NotEqual(idOne, idTwo);
         Assert.True(areNotEqual);
     }
-    
-    [Fact]
+
+    [Fact(DisplayName = "Deve converter implicitamente para Guid ao ser atribuído a uma variável Guid")]
     public void Should_ImplicitlyConvertToGuid_When_AssignedToGuidVariable()
     {
         // Arrange
@@ -71,7 +71,7 @@ public class ProductIdTests
         ProductId productId = originalGuid;
 
         // Act
-        Guid resultGuid = productId; 
+        Guid resultGuid = productId;
 
         // Assert
         Assert.Equal(originalGuid, resultGuid);

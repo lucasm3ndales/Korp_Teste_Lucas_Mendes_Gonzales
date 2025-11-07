@@ -25,10 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Src\Application\" />
-      <Folder Include="Src\Domain\Entities\" />
-      <Folder Include="Src\Domain\Exceptions\" />
-      <Folder Include="Src\Infra\" />
+      <Folder Include="Src\Application\Common\Exceptions\" />
     </ItemGroup>
 
 </Project>

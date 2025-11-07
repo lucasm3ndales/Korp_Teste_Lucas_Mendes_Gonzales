@@ -3,11 +3,11 @@ using StockService.Application.Common.Dtos;
 
 namespace StockService.Application.UseCases.CreateProduct;
 
-public class CreateProductCommand: IRequest<ApiResultDto<ProductDto>>
+public class CreateProductCommand(string code, string description, int initialStockBalance): IRequest<ApiResultDto<ProductDto>>
 {
-    public string Code { get; init; }
+    public string Code { get; init; } = code;
     
-    public string Description { get; init; }
+    public string Description { get; init; } = description;
 
-    public int InitialStockBalance { get; init; }
+    public int InitialStockBalance { get; init; } = initialStockBalance;
 }

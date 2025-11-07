@@ -5,24 +5,24 @@ using StockService.Application.Repositories;
 using StockService.Application.UseCases.GetAllProducts;
 using StockService.Domain.Entities;
 
-namespace StockService.Application.Tests;
+namespace StockService.Application.Unit.Tests;
 
-public class GetAllProductsQueryHandlerUnitTests
+public class GetAllProductsQueryHandlerTests
 {
     private readonly Mock<IProductRepository> _productRepositoryMock;
-    private readonly GetAllProductsQueryHandlerUnit _handlerUnit;
+    private readonly GetAllProductsQueryHandler _handler;
 
-    public GetAllProductsQueryHandlerUnitTests()
+    public GetAllProductsQueryHandlerTests()
     {
         _productRepositoryMock = new Mock<IProductRepository>();
-        _handlerUnit = new GetAllProductsQueryHandlerUnit(_productRepositoryMock.Object);
+        _handler = new GetAllProductsQueryHandler(_productRepositoryMock.Object);
 
-        TypeAdapterConfig.GlobalSettings.Scan(typeof(GetAllProductsQueryHandlerUnit).Assembly);
+        TypeAdapterConfig.GlobalSettings.Scan(typeof(GetAllProductsQueryHandler).Assembly);
         TypeAdapterConfig<Product, ProductDto>.NewConfig()
             .Map(dest => dest.Id, src => src.Id);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve retornar sucesso com lista de produtos quando existirem produtos")]
     public async Task Should_ReturnSuccessWithProductList_When_ProductsExist()
     {
         // Arrange
@@ -38,7 +38,7 @@ public class GetAllProductsQueryHandlerUnitTests
             .ReturnsAsync(productList);
 
         // Act
-        var result = await _handlerUnit.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -47,7 +47,7 @@ public class GetAllProductsQueryHandlerUnitTests
         Assert.Equal("HCL-123", result.Data.First().Code);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Deve retornar sucesso com lista vazia quando não existirem produtos")]
     public async Task Should_ReturnSuccessWithEmptyList_When_NoProductsExist()
     {
         // Arrange
@@ -59,7 +59,7 @@ public class GetAllProductsQueryHandlerUnitTests
             .ReturnsAsync(emptyList);
 
         // Act
-        var result = await _handlerUnit.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
