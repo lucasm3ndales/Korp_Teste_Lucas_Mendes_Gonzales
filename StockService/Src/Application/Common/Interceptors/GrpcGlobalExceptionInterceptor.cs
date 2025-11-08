@@ -36,6 +36,7 @@ public class GrpcGlobalExceptionInterceptor(
             case ProductCodeAlreadyExistsException:
                 return new RpcException(new Status(StatusCode.AlreadyExists, exception.Message));
 
+            case ProductsNotFoundException:
             case ProductNotExistsException:
                 return new RpcException(new Status(StatusCode.NotFound, exception.Message));
                 
@@ -47,6 +48,7 @@ public class GrpcGlobalExceptionInterceptor(
             case InvalidProductDescriptionException:
             case InvalidProductStockBalanceException:
             case InvalidStockBalanceQuantityException:
+            case ProductIdsEmptyException:
                 return new RpcException(new Status(StatusCode.InvalidArgument, exception.Message));
 
             case StockDomainException:

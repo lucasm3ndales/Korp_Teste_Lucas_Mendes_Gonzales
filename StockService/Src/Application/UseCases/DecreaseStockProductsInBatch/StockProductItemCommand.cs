@@ -1,6 +1,6 @@
 ﻿using StockService.Domain.ValueObjects;
 
-namespace StockService.Application.UseCases.DecreaseStockBalance;
+namespace StockService.Application.UseCases.DecreaseStockProductsInBatch;
 
 public class StockProductItemCommand()
 {

@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using Moq;
 using StockService.Application.Common.Exceptions;
-using StockService.Application.Repositories;
+using StockService.Application.Common.Repositories;
 using StockService.Application.UseCases.CreateProduct;
 using StockService.Domain.Entities;
 using StockService.Domain.Exceptions;

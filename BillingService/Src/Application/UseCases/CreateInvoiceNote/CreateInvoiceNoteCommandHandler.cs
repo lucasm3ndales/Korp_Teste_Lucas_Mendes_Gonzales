@@ -4,36 +4,68 @@ using BillingService.Application.Common.Repositories;
 using BillingService.Domain.Entities;
 using Mapster;
 using MediatR;
+using StockManager.Grpc;
 
 namespace BillingService.Application.UseCases.CreateInvoiceNote;
 
 public class CreateInvoiceNoteCommandHandler(
-    IInvoiceNoteRepository invoiceNoteRepository
-    ): IRequestHandler<CreateInvoiceNoteCommand, ApiResultDto<InvoiceNoteDto>>
+    IInvoiceNoteRepository invoiceNoteRepository,
+    StockManager.Grpc.StockManager.StockManagerClient grpcClient
+) : IRequestHandler<CreateInvoiceNoteCommand, ApiResultDto<InvoiceNoteDto>>
 {
     public async Task<ApiResultDto<InvoiceNoteDto>> Handle(
-        CreateInvoiceNoteCommand request, 
+        CreateInvoiceNoteCommand request,
         CancellationToken cancellationToken)
     {
-        var lastNumberNote = await invoiceNoteRepository.GetLastSequentialNumber(cancellationToken);
+        if (request.Items == null || !request.Items.Any())
+            throw new InvoiceNoteItemsEmptyException();
 
-        var invoiceNote = new InvoiceNote(lastNumberNote + 1);
+        var productIds = request.Items
+            .Select(i => i.ProductId.ToString())
+            .ToList();
+
+        var products = await GetProductsByIds(productIds);
+
+        var productMap = products.ToDictionary(p => Guid.Parse(p.Id));
         
-        foreach (var i in request.Items)
+        var invoiceNote = new InvoiceNote();
+
+        foreach (var item in request.Items)
         {
+            if (!productMap.TryGetValue(item.ProductId, out var productDetails))
+            {
+                throw new InvoiceNoteProductsNotFoundException();
+            }
+            
             invoiceNote.AddItem(
-                i.ProductId,
-                i.ProductCode,
-                i.ProductDescription,
-                i.Quantity
+                item.ProductId,
+                productDetails.Code,
+                productDetails.Description,
+                item.Quantity
             );
         }
 
         await invoiceNoteRepository.Add(invoiceNote, cancellationToken);
+        
         await invoiceNoteRepository.SaveChanges(cancellationToken);
 
-        var invoiceNoteDto = invoiceNote.Adapt<InvoiceNoteDto>();
+        return ApiResultDto<InvoiceNoteDto>.Success(
+            "Nota fiscal criada com sucesso!",
+            invoiceNote.Adapt<InvoiceNoteDto>());
+    }
 
-        return ApiResultDto<InvoiceNoteDto>.Success("Nota fiscal criada com sucesso!", invoiceNoteDto);
+    private async Task<IEnumerable<ProductItem>> GetProductsByIds(List<string> productIds)
+    {
+        var grpcRequest = new GetProductsByIdsRequest();
+        grpcRequest.ProductIds.AddRange(productIds);
+
+        var products = await grpcClient.GetProductsByIdsAsync(grpcRequest);
+
+        if (!products.IsSuccess
+            || products.Data == null
+            || !products.Data.Any())
+            throw new InvoiceNoteProductsNotFoundException(products.Messages.ToList());
+
+        return products.Data;
     }
 }

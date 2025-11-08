@@ -24,7 +24,7 @@ public class InvoiceNoteRepository(
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<long> GetLastSequentialNumber(CancellationToken cancellationToken)
+    public async Task<long> GetLastNumberNote(CancellationToken cancellationToken)
     {
         return await dbContext
             .InvoiceNotes

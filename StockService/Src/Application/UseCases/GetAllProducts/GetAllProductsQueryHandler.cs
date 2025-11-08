@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using StockService.Application.Common.Dtos;
-using StockService.Application.Repositories;
+using StockService.Application.Common.Repositories;
 
 namespace StockService.Application.UseCases.GetAllProducts;
 

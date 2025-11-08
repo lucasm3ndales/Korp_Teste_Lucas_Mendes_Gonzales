@@ -13,7 +13,7 @@ public class Product: IEquatable<Product>
 
     public int StockBalance { get; private set; }
     
-    public byte[] RowVersion { get; private set; } = null!;
+    public byte[] RowVersion { get; private set; } = [];
     
     public DateTimeOffset CreatedAt { get; private set; }
     

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StockService.Application.Repositories;
+using StockService.Application.Common.Repositories;
 using StockService.Domain.Entities;
 using StockService.Domain.ValueObjects;
 using StockService.Infra.Data;
@@ -62,12 +62,21 @@ public class ProductRepository(
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Product>?> GetProductsByIds(
+    public async Task<IEnumerable<Product>?> GetByIds(
         List<ProductId> ids, 
         CancellationToken cancellationToken)
     {
         return await dbContext
             .Products
+            .Where(p => ids.Contains(p.Id))
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Product>?> GetByIdsNoTracked(List<ProductId> ids, CancellationToken cancellationToken)
+    {
+        return await dbContext
+            .Products
+            .AsNoTracking()
             .Where(p => ids.Contains(p.Id))
             .ToListAsync(cancellationToken);
     }

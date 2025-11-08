@@ -2,6 +2,7 @@
 using System.Text.Json;
 using StockService.Application.Common.Dtos;
 using StockService.Application.Common.Exceptions;
+using StockService.Config;
 using StockService.Domain.Exceptions;
 
 namespace StockService.Application.Common.Middlewares;
@@ -37,6 +38,7 @@ public class HttpGlobalExceptionMiddleware(
                 apiResult = ApiResultDto<object>.Failure(exception.Message);
                 break;
 
+            case ProductsNotFoundException:
             case ProductNotExistsException:
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 apiResult = ApiResultDto<object>.Failure(exception.Message);
@@ -47,6 +49,7 @@ public class HttpGlobalExceptionMiddleware(
             case InvalidProductCodeException:
             case InvalidProductDescriptionException:
             case InvalidProductStockBalanceException:
+            case ProductIdsEmptyException:
             case InvalidStockBalanceQuantityException:
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 apiResult = ApiResultDto<object>.Failure(exception.Message);

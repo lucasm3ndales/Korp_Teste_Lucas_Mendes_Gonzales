@@ -1,0 +1,43 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package StockManager.Grpc;
+
+service StockManager {
+  rpc DecreaseStockProductsInBatch (DecreaseStockProductsInBatchRequest) returns (DecreaseStockProductsInBatchResponse);
+  rpc GetProductsByIds (GetProductsByIdsRequest) returns (GetProductsByIdsResponse);
+}
+
+message DecreaseStockProductsInBatchRequest {
+  repeated StockItem items = 1;
+}
+
+message StockItem {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message DecreaseStockProductsInBatchResponse {
+  bool is_success = 1;
+  repeated string messages = 2;
+  bool data = 3;
+}
+
+message GetProductsByIdsRequest {
+  repeated string product_ids = 1;
+}
+
+message GetProductsByIdsResponse {
+  bool is_success = 1;
+  repeated string messages = 2;
+  repeated ProductItem data = 3;
+}
+
+message ProductItem {
+  string id = 1;
+  string code = 2;
+  string description = 3;
+  int32 stock_balance = 4;
+  google.protobuf.Timestamp created_at = 5;
+}

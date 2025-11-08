@@ -21,12 +21,9 @@ public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContex
                 v => v.Value,
                 v => ProductId.From(v));
 
-            modelBuilder.Entity<Product>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .HasConversion(productIdConverter)
-                    .ValueGeneratedNever();
-            });
+            entity.Property(p => p.Id)
+                .HasConversion(productIdConverter)
+                .ValueGeneratedNever();
 
             entity.HasIndex(p => p.Code).IsUnique();
 
@@ -38,7 +35,9 @@ public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContex
 
             entity.Property(p => p.StockBalance);
 
-            entity.Property(p => p.RowVersion).IsRowVersion();
+            entity.Property(p => p.RowVersion)
+                .IsRowVersion()
+                .ValueGeneratedOnUpdate();
         });
     }
 }

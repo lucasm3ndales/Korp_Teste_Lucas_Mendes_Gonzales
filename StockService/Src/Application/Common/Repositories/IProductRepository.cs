@@ -1,7 +1,7 @@
 ﻿using StockService.Domain.Entities;
 using StockService.Domain.ValueObjects;
 
-namespace StockService.Application.Repositories;
+namespace StockService.Application.Common.Repositories;
 
 public interface IProductRepository
 {
@@ -19,5 +19,7 @@ public interface IProductRepository
     
     Task<IEnumerable<Product>?> ListAllNoTracked(CancellationToken cancellationToken);
     
-    Task<IEnumerable<Product>?> GetProductsByIds(List<ProductId> ids, CancellationToken cancellationToken);
+    Task<IEnumerable<Product>?> GetByIds(List<ProductId> ids, CancellationToken cancellationToken);
+    
+    Task<IEnumerable<Product>?> GetByIdsNoTracked(List<ProductId> ids, CancellationToken cancellationToken);
 }

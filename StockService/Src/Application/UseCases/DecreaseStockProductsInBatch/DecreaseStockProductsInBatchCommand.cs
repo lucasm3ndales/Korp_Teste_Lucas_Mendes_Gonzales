@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using StockService.Application.Common.Dtos;
-using StockService.Domain.ValueObjects;
 
-namespace StockService.Application.UseCases.DecreaseStockBalance;
+namespace StockService.Application.UseCases.DecreaseStockProductsInBatch;
 
 public class DecreaseStockProductsInBatchCommand : IRequest<ApiResultDto<bool>>
 {

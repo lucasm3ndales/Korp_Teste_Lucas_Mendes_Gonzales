@@ -1,17 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StockService.Application.UseCases.CreateProduct;
-using StockService.Application.UseCases.DecreaseStockBalance;
 using StockService.Application.UseCases.GetAllProducts;
-using StockService.Application.UseCases.GetProductById;
 
-namespace StockService.Presentation;
+namespace StockService.Presentation.Http;
 
 public static class ProductEndpoints
 {
-    public static void MapProductRoutes(this IEndpointRouteBuilder app)
+    public static void MapV1ProductRoutes(this IEndpointRouteBuilder app)
     {
-        var api = app.MapGroup("/api/products").WithTags("Products");
+        var api = app.MapGroup("/api/v1/products").WithTags("Products");
 
         api.MapPost("/", async (
             [FromBody] CreateProductCommand command,
@@ -23,16 +21,7 @@ public static class ProductEndpoints
                 result
             );
         });
-
-        api.MapGet("/{id:guid}", async (
-            Guid id,
-            [FromServices] IMediator mediator) =>
-        {
-            var query = new GetProductByIdQuery(id);
-            return await mediator.Send(query);
-        });
-
-
+        
         api.MapGet("/", async ([FromServices] IMediator mediator) =>
         {
             var query = new GetAllProductsQuery();

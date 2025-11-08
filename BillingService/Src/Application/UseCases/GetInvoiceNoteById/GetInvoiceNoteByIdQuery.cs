@@ -4,7 +4,7 @@ using MediatR;
 
 namespace BillingService.Application.UseCases.GetInvoiceById;
 
-public class GetInvoiceNoteByIdQuery(string id): IRequest<ApiResultDto<InvoiceNoteDto>>
+public class GetInvoiceNoteByIdQuery(Guid id): IRequest<ApiResultDto<InvoiceNoteDto>>
 {
-    public InvoiceNoteId Id { get; }
+    public Guid Id { get; } = id;
 }

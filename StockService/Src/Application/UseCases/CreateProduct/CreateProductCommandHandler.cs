@@ -2,7 +2,7 @@
 using MediatR;
 using StockService.Application.Common.Dtos;
 using StockService.Application.Common.Exceptions;
-using StockService.Application.Repositories;
+using StockService.Application.Common.Repositories;
 using StockService.Domain.Entities;
 
 namespace StockService.Application.UseCases.CreateProduct;

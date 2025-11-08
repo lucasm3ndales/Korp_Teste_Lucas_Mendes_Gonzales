@@ -1,7 +1,9 @@
 ﻿using Grpc.Core;
+using Mapster;
 using MediatR;
 using StockManager.Grpc;
-using StockService.Application.UseCases.DecreaseStockBalance;
+using StockService.Application.UseCases.DecreaseStockProductsInBatch;
+using StockService.Application.UseCases.GetProductsByIds;
 using StockService.Domain.Exceptions;
 
 namespace StockService.Presentation.Grpc;
@@ -16,7 +18,7 @@ public class StockManagerService(
     {
         var command = new DecreaseStockProductsInBatchCommand
         {
-            Items = request.Items.Select(item => 
+            Items = request.Items.Select(item =>
             {
                 if (!Guid.TryParse(item.ProductId, out var id))
                     throw new InvalidProductIdException();
@@ -28,7 +30,7 @@ public class StockManagerService(
                 };
             }).ToList()
         };
-        
+
         var result = await mediator.Send(command, context.CancellationToken);
 
         var response = new DecreaseStockProductsInBatchResponse
@@ -36,9 +38,45 @@ public class StockManagerService(
             IsSuccess = result.IsSuccess,
             Data = result.Data
         };
-        
+
         response.Messages.AddRange(result.Messages);
-        
+
+        return response;
+    }
+
+    public override async Task<GetProductsByIdsResponse> GetProductsByIds(GetProductsByIdsRequest request,
+        ServerCallContext context)
+    {
+        var command = new GetProductsByIdsQuery
+        {
+            ProductIds = request.ProductIds.Select(i =>
+            {
+                if (!Guid.TryParse(i, out var id))
+                    throw new InvalidProductIdException();
+
+                return id;
+            }).ToList()
+        };
+
+        var result = await mediator.Send(command, context.CancellationToken);
+
+        var response = new GetProductsByIdsResponse
+        {
+            IsSuccess = result.IsSuccess,
+        };
+
+        response.Messages.AddRange(result.Messages);
+
+        if (result.Data != null && result.Data.Any())
+        {
+            response.Data.AddRange(
+                result.Data
+                    .Select(r =>
+                        r.Adapt<ProductItem>()
+                    )
+            );
+        }
+
         return response;
     }
 }

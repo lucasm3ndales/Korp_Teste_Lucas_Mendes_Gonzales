@@ -3,5 +3,6 @@
 public enum InvoiceNoteStatus
 {
     OPEN,
-    CLOSED
+    CLOSED,
+    PROCESSING,
 }

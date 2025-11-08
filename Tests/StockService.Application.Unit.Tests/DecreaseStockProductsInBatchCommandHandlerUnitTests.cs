@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 using StockService.Application.Common.Exceptions;
-using StockService.Application.Repositories;
-using StockService.Application.UseCases.DecreaseStockBalance;
+using StockService.Application.Common.Repositories;
+using StockService.Application.UseCases.DecreaseStockProductsInBatch;
 using StockService.Domain.Entities;
 using StockService.Domain.Exceptions;
 using StockService.Domain.ValueObjects;
@@ -37,7 +37,7 @@ public class DecreaseStockProductsInBatchCommandHandlerUnitTests
             ]
         };
 
-        _productRepositoryMock.Setup(r => r.GetProductsByIds(
+        _productRepositoryMock.Setup(r => r.GetByIds(
                 It.IsAny<List<ProductId>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(products);
@@ -70,7 +70,7 @@ public class DecreaseStockProductsInBatchCommandHandlerUnitTests
             ]
         };
 
-        _productRepositoryMock.Setup(r => r.GetProductsByIds(
+        _productRepositoryMock.Setup(r => r.GetByIds(
                 It.IsAny<List<ProductId>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<Product> { productA });
@@ -95,12 +95,12 @@ public class DecreaseStockProductsInBatchCommandHandlerUnitTests
         {
             Items =
             [
-                new StockProductItemCommand { Id = productA.Id, QuantityUsed = 5 }, // OK
-                new StockProductItemCommand { Id = productB.Id, QuantityUsed = 10 } // Falha
+                new StockProductItemCommand { Id = productA.Id, QuantityUsed = 5 },
+                new StockProductItemCommand { Id = productB.Id, QuantityUsed = 10 }
             ]
         };
 
-        _productRepositoryMock.Setup(r => r.GetProductsByIds(
+        _productRepositoryMock.Setup(r => r.GetByIds(
                 It.IsAny<List<ProductId>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(products);
@@ -127,7 +127,7 @@ public class DecreaseStockProductsInBatchCommandHandlerUnitTests
             Items = [ new StockProductItemCommand { Id = productA.Id, QuantityUsed = 5 } ]
         };
 
-        _productRepositoryMock.Setup(r => r.GetProductsByIds(
+        _productRepositoryMock.Setup(r => r.GetByIds(
                 It.IsAny<List<ProductId>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(products);

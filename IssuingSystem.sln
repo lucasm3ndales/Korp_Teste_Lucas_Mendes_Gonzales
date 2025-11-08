@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-#
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService", "StockService\StockService.csproj", "{C6E24C9A-3041-4BA0-80FB-CA5A9EA16E61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8209CE4-AFF6-4AFA-A7AA-D2F15A5A2E3D}"
@@ -15,6 +15,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Domain.Unit.Tests", "Tests\StockService.Domain.Unit.Tests\StockService.Domain.Unit.Tests.csproj", "{5D4B1671-F305-415E-82CE-61F159E96E7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Application.Unit.Tests", "Tests\StockService.Application.Unit.Tests\StockService.Application.Unit.Tests.csproj", "{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingService.Application.Unit.Tests", "Tests\BillingService.Application.Unit.Tests\BillingService.Application.Unit.Tests.csproj", "{7211B071-7245-4C87-8585-BF94579578D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingService.Domain.Unit.Tests", "Tests\BillingService.Domain.Unit.Tests\BillingService.Domain.Unit.Tests.csproj", "{581306A6-E3F6-4307-9490-61C31F99D4C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,9 +42,19 @@ Global
 		{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7211B071-7245-4C87-8585-BF94579578D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7211B071-7245-4C87-8585-BF94579578D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7211B071-7245-4C87-8585-BF94579578D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7211B071-7245-4C87-8585-BF94579578D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581306A6-E3F6-4307-9490-61C31F99D4C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581306A6-E3F6-4307-9490-61C31F99D4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581306A6-E3F6-4307-9490-61C31F99D4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581306A6-E3F6-4307-9490-61C31F99D4C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5D4B1671-F305-415E-82CE-61F159E96E7C} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
 		{FB3EE773-0733-421B-A2E7-9CF014DF3CB9} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
+		{7211B071-7245-4C87-8585-BF94579578D4} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
+		{581306A6-E3F6-4307-9490-61C31F99D4C6} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
 	EndGlobalSection
 EndGlobal

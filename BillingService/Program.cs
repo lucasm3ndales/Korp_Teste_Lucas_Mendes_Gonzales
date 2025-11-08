@@ -6,7 +6,8 @@ using BillingService.Config;
 using BillingService.Infra.Data;
 using BillingService.Presentation;
 using System.Reflection;
-using BillingService.Domain.ValueObjects;
+using BillingService.Application.Common.Repositories;
+using BillingService.Infra.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,16 @@ builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Billing Service API",
+        Version = "v1",
+        Description = "Documentação da API de Gerenciamento de Fatura."
+    });
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -26,6 +37,8 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
+
+builder.Services.AddScoped<IInvoiceNoteRepository, InvoiceNoteRepository>();
 
 builder.Services.AddDbContext<BillingDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -35,21 +48,29 @@ builder.Services.AddMediatR(cfg =>
 
 TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
 
-builder.Services.ConfigureHttpJsonOptions(options =>
+var stockServiceUrl = builder.Configuration["GrpcServices:StockService"];
+
+builder.Services.AddGrpcClient<StockManager.Grpc.StockManager.StockManagerClient>(options =>
 {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonContext.Default);
+    options.Address = new Uri(stockServiceUrl);
 });
 
-TypeAdapterConfig<InvoiceNoteId, Guid>.NewConfig()
-    .MapWith(id => id.Value);
-
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Billing Service API v1");
+    });
+}
 
 app.UseSerilogRequestLogging();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
-app.MapBillingRoutes();
+app.MapV1BillingRoutes();
 
 app.Run();
 

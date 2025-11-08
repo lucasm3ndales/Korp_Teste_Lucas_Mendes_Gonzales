@@ -1,5 +1,7 @@
 ﻿using BillingService.Domain.Entities;
+using BillingService.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BillingService.Infra.Data;
 
@@ -15,34 +17,44 @@ public class BillingDbContext(DbContextOptions<BillingDbContext> options) : DbCo
 
         modelBuilder.Entity<InvoiceNote>(entity =>
         {
-            entity.HasKey(p => p.Id);
+            entity.HasKey(i => i.Id);
             
-            entity.HasIndex(p => p.NoteNumber).IsUnique();
+            var invoiceNoteIdConversor = new ValueConverter<InvoiceNoteId, Guid>(
+                v => v.Value,
+                v => InvoiceNoteId.From(v));
             
-            entity.Property(p => p.Status)
+            entity.Property(i => i.Id)
+                .HasConversion(invoiceNoteIdConversor)
+                .ValueGeneratedNever();
+            
+            entity.HasIndex(i => i.NoteNumber).IsUnique();
+            
+            entity.Property(i => i.NoteNumber)
+                .ValueGeneratedOnAdd();
+            
+            entity.Property(i => i.Status)
                 .HasConversion<string>()
                 .HasMaxLength(20);
 
-            entity.Property(p => p.RowVersion).IsRowVersion();
-
-            entity.Property(p => p.CreatedAt)
-                .HasDefaultValueSql("NOW()");
+            entity.Property(i => i.RowVersion)
+                .IsRowVersion()
+                .ValueGeneratedOnUpdate();
             
-            entity.HasMany(p => p.Items)
+            entity.HasMany(i => i.Items)
                 .WithOne()
-                .HasForeignKey(item => item.InvoiceNoteId)
+                .HasForeignKey(i => i.InvoiceNoteId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<InvoiceNoteItem>(entity =>
         {
-            entity.HasKey(p => p.Id);
+            entity.HasKey(i => i.Id);
             
-            entity.Property(p => p.Id).ValueGeneratedOnAdd();
+            entity.Property(i => i.Id).ValueGeneratedOnAdd();
 
-            entity.Property(p => p.ProductCode).HasMaxLength(20);
+            entity.Property(i => i.ProductCode).HasMaxLength(20);
             
-            entity.Property(p => p.ProductDescription).HasMaxLength(255);
+            entity.Property(i => i.ProductDescription).HasMaxLength(255);
         });
     }
 }

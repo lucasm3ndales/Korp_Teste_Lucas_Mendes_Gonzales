@@ -9,7 +9,7 @@ public interface IInvoiceNoteRepository
     
     Task<InvoiceNote?> GetByIdWithItems(InvoiceNoteId id, CancellationToken cancellationToken);
     
-    Task<long> GetLastSequentialNumber(CancellationToken cancellationToken);
+    Task<long> GetLastNumberNote(CancellationToken cancellationToken);
     
     Task<InvoiceNote?> GetById(InvoiceNoteId id, CancellationToken cancellationToken);
     

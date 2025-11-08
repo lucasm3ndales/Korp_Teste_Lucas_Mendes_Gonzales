@@ -22,8 +22,8 @@ services:
     image: postgres:16-alpine
     container_name: stock_service_db
     environment:
-      - POSTGRES_USER=stockuser
-      - POSTGRES_PASSWORD=stockpass
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=stock_db
     ports:
       - "5433:5432"
@@ -57,11 +57,11 @@ services:
     restart: unless-stopped
 
   billing_service_db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: billing_service_db
     environment:
-      - POSTGRES_USER=billinguser
-      - POSTGRES_PASSWORD=billingpass
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=billing_db
     ports:
       - "5434:5432"

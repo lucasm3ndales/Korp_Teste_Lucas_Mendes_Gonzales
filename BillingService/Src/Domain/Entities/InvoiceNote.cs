@@ -16,26 +16,23 @@ public class InvoiceNote
     
     public DateTimeOffset UpdatedAt { get; private set; }
     
-    public byte[] RowVersion { get; private set; } = null!;
+    public byte[] RowVersion { get; private set; } = [];
 
     private readonly List<InvoiceNoteItem> _items = [];
     
     public IReadOnlyCollection<InvoiceNoteItem> Items => _items.AsReadOnly();
-
-    protected InvoiceNote() { }
     
-    public InvoiceNote(long noteNumber)
+    public InvoiceNote()
     {
         Id = InvoiceNoteId.NewId();
-        NoteNumber = noteNumber;
         Status = InvoiceNoteStatus.OPEN; 
         CreatedAt = DateTimeOffset.UtcNow;
     }
     
     public void AddItem(Guid productId, string code, string description, int quantity)
     {
-        if (Status == InvoiceNoteStatus.CLOSED)
-            throw new InvoiceNoteClosedException();
+        if (Status != InvoiceNoteStatus.OPEN)
+            throw new InvalidInvoiceNoteStatusException(Status);
         
 
         var item = new InvoiceNoteItem(productId, code, description, quantity);
@@ -45,8 +42,8 @@ public class InvoiceNote
     
     public void Close()
     {
-        if (Status != InvoiceNoteStatus.OPEN)
-            throw new InvoiceNoteClosedException();
+        if (Status != InvoiceNoteStatus.PROCESSING)
+            throw new InvalidInvoiceNoteStatusException(Status);
         
 
         if (_items.Count == 0)
@@ -54,6 +51,22 @@ public class InvoiceNote
         
 
         Status = InvoiceNoteStatus.CLOSED;
+    }
+
+    public void Process()
+    {
+        if (Status != InvoiceNoteStatus.OPEN)
+            throw new InvalidInvoiceNoteStatusException(Status);
+        
+        Status = InvoiceNoteStatus.PROCESSING;
+    }
+    
+    public void RevertToOpen()
+    {
+        if (Status != InvoiceNoteStatus.PROCESSING)
+            throw new InvalidInvoiceNoteStatusException(Status);
+        
+        Status = InvoiceNoteStatus.OPEN;
     }
     
     public void SetModified()

@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using Moq;
 using StockService.Application.Common.Dtos;
-using StockService.Application.Repositories;
+using StockService.Application.Common.Repositories;
 using StockService.Application.UseCases.GetAllProducts;
 using StockService.Domain.Entities;
 

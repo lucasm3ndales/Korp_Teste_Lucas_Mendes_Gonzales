@@ -9,9 +9,9 @@ namespace BillingService.Presentation;
 
 public static class BillingEndpoints
 {
-    public static void MapBillingRoutes(this IEndpointRouteBuilder app)
+    public static void MapV1BillingRoutes(this IEndpointRouteBuilder app)
     {
-        var api = app.MapGroup("/api/billing").WithTags("Billing");
+        var api = app.MapGroup("/api/v1/billing").WithTags("Billing");
         
         api.MapPost("/invoice-notes", async (
             [FromBody] CreateInvoiceNoteCommand command,
@@ -34,8 +34,8 @@ public static class BillingEndpoints
             return Results.Ok(result);
         });
         
-        api.MapGet("/invoice-notes/{id}", async (
-            string id, 
+        api.MapGet("/invoice-notes/{id:guid}", async (
+            Guid id, 
             [FromServices] IMediator mediator) =>
         {
             var query = new GetInvoiceNoteByIdQuery(id);

@@ -2,39 +2,49 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Application.Common.Dtos;
 using StockService.Application.Common.Exceptions;
-using StockService.Application.Repositories;
+using StockService.Application.Common.Repositories;
 using StockService.Domain.Exceptions;
 
-namespace StockService.Application.UseCases.DecreaseStockBalance;
+namespace StockService.Application.UseCases.DecreaseStockProductsInBatch;
 
 public class DecreaseStockProductsInBatchCommandHandler(
     IProductRepository productRepository
 ) : IRequestHandler<DecreaseStockProductsInBatchCommand, ApiResultDto<bool>>
 {
-    public async Task<ApiResultDto<bool>> Handle(DecreaseStockProductsInBatchCommand request,
+   public async Task<ApiResultDto<bool>> Handle(DecreaseStockProductsInBatchCommand request,
         CancellationToken cancellationToken)
     {
         try
         {
-            var productIds = request.Items.Select(item => item.Id).ToList();
+            var items = request
+                .Items
+                .GroupBy(i => i.Id)
+                .Select(g => new 
+                {
+                    ProductId = g.Key,
+                    TotalQuantityUsed = g.Sum(item => item.QuantityUsed)
+                })
+                .ToList();
+
+            var productIds = items.Select(item => item.ProductId).ToList();
             
-            var products = await productRepository.GetProductsByIds(productIds, cancellationToken);
-
+            var products = await productRepository.GetByIds(productIds, cancellationToken);
+            
             var productDic = products.ToDictionary(p => p.Id);
-
-            foreach (var i in request.Items)
+            
+            foreach (var i in items)
             {
-                if (!productDic.TryGetValue(i.Id, out var p))
+                if (!productDic.TryGetValue(i.ProductId, out var p))
                     throw new ProductNotExistsException();
                 
-                if (p.StockBalance < i.QuantityUsed)
-                    throw new InsufficientStockBalanceException(p.Code, p.StockBalance,  i.QuantityUsed);
+                if (p.StockBalance < i.TotalQuantityUsed)
+                    throw new InsufficientStockBalanceException(p.Code, p.StockBalance,  i.TotalQuantityUsed);
             }
-
-            foreach (var i in request.Items)
+            
+            foreach (var i in items)
             {
-                var p = productDic[i.Id];
-                p.DecreaseStockBalance(i.QuantityUsed);
+                var p = productDic[i.ProductId];
+                p.DecreaseStockBalance(i.TotalQuantityUsed);
             }
             
             await productRepository.SaveChanges(cancellationToken);

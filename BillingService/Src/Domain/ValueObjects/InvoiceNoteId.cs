@@ -18,6 +18,8 @@ public record InvoiceNoteId
     
     public static implicit operator Guid(InvoiceNoteId id) => id.Value;
     public static implicit operator InvoiceNoteId(Guid value) => new(value);
+    
+    public static InvoiceNoteId From(Guid value) => new(value);
 
     public override string ToString() => Value.ToString();
 };
