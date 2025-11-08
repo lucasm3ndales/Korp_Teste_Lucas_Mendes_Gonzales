@@ -36,6 +36,7 @@ public class Product: IEquatable<Product>
         Code = code;
         Description = description;
         StockBalance = initialStockBalance;
+        CreatedAt =  DateTimeOffset.UtcNow;
     }
     
     public void DecreaseStockBalance(int quantityUsed)

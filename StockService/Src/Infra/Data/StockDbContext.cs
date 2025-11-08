@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockService.Domain.Entities;
+using StockService.Domain.ValueObjects;
 
 namespace StockService.Infra.Data;
 
@@ -14,6 +16,17 @@ public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContex
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(p => p.Id);
+            
+            var productIdConverter = new ValueConverter<ProductId, Guid>(
+                v => v.Value,
+                v => ProductId.From(v));
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasConversion(productIdConverter)
+                    .ValueGeneratedNever();
+            });
 
             entity.HasIndex(p => p.Code).IsUnique();
 
@@ -26,9 +39,6 @@ public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContex
             entity.Property(p => p.StockBalance);
 
             entity.Property(p => p.RowVersion).IsRowVersion();
-
-            entity.Property(p => p.CreatedAt)
-                .HasDefaultValueSql("NOW()");
         });
     }
 }

@@ -20,5 +20,7 @@ public record ProductId
     
     public static implicit operator ProductId(Guid value) => new(value);
     
+    public static ProductId From(Guid value) => new(value);
+    
     public override string ToString() => Value.ToString();
 };

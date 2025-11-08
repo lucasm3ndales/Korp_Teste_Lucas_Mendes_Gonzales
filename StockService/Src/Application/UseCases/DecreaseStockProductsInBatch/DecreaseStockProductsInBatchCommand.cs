@@ -4,8 +4,7 @@ using StockService.Domain.ValueObjects;
 
 namespace StockService.Application.UseCases.DecreaseStockBalance;
 
-public class DecreaseStockBalanceCommand : IRequest<ApiResultDto<bool>>
+public class DecreaseStockProductsInBatchCommand : IRequest<ApiResultDto<bool>>
 {
-    public ProductId Id { get; set; }
-    public int QuantityUsed { get; init; }
+    public List<StockProductItemCommand> Items { get; init; } = [];
 }

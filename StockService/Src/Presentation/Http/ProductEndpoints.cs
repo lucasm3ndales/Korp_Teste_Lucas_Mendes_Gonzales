@@ -24,14 +24,6 @@ public static class ProductEndpoints
             );
         });
 
-        api.MapPost("/stock/decrease", async (
-            [FromBody] DecreaseStockBalanceCommand command,
-            [FromServices] IMediator mediator) =>
-        {
-            var result = await mediator.Send(command);
-            return Results.Ok(result);
-        });
-
         api.MapGet("/{id:guid}", async (
             Guid id,
             [FromServices] IMediator mediator) =>

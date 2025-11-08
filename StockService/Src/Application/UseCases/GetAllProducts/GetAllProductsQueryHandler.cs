@@ -13,7 +13,7 @@ public class GetAllProductsQueryHandler(
         CancellationToken cancellationToken)
     {
         var products = await productRepository
-            .GetAllProductsNoTracked(cancellationToken);
+            .ListAllNoTracked(cancellationToken);
 
         if (!products.Any())
             return ApiResultDto<IEnumerable<ProductDto>>.Success([]);

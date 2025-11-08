@@ -1,80 +1,66 @@
+using System.Reflection;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using StockService.Application.Common.Interceptors;
 using StockService.Application.Common.Middlewares;
 using StockService.Application.Repositories;
+using StockService.Config;
 using StockService.Infra.Data;
 using StockService.Infra.Repositories;
 using StockService.Presentation;
-using System.Reflection;
-using Serilog;
-using StockService.Config;
+using StockService.Presentation.Grpc;
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
+var builder = WebApplication.CreateBuilder(args);
 
-try
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
+    .ReadFrom.Configuration(context.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console(
+        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
+);
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCors(options =>
 {
-    var builder = WebApplication.CreateBuilder(args);
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
-    builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
-        .ReadFrom.Configuration(context.Configuration)
-        .MinimumLevel.Information()
-        .Enrich.FromLogContext()
-        .WriteTo.Console(
-            outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
-    );
+TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
 
-    builder.Services.AddEndpointsApiExplorer();
-
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAll", policy =>
-            policy.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-    });
-
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-    builder.Services.AddDbContext<StockDbContext>(options =>
-        options.UseNpgsql(connectionString)
-    );
-
-    builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-    builder.Services.AddMediatR(cfg =>
-        cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)
-    );
-
-    TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
-    
-    builder.Services.ConfigureHttpJsonOptions(options =>
-    {
-        options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonContext.Default);
-    });
-    
-    var app = builder.Build();
-
-    app.UseSerilogRequestLogging();
-
-    app.UseMiddleware<GlobalExceptionMiddleware>();
-
-    app.UseHttpsRedirection();
-    app.UseCors("AllowAll");
-    app.MapProductRoutes();
-
-    Log.Information("Aplicação iniciando...");
-    app.Run();
-}
-catch (Exception ex)
+builder.Services.ConfigureHttpJsonOptions(options =>
 {
-    Log.Fatal(ex, "Aplicação falhou ao iniciar");
-}
-finally
-{
-    Log.CloseAndFlush();
-}
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonContext.Default);
+});
 
-public partial class Program() {}
+builder.Services.AddDbContext<StockDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddScoped<GrpcGlobalExceptionInterceptor>();
+
+builder.Services.AddGrpc(options =>
+{
+    options.Interceptors.Add<GrpcGlobalExceptionInterceptor>();
+});
+
+var app = builder.Build();
+
+app.UseSerilogRequestLogging();
+app.UseMiddleware<HttpGlobalExceptionMiddleware>();
+app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.MapGrpcService<StockManagerService>();
+app.MapProductRoutes();
+
+app.Run();
+
+public partial class Program { }

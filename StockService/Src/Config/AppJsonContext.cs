@@ -9,7 +9,7 @@ namespace StockService.Config;
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(CreateProductCommand))]
-[JsonSerializable(typeof(DecreaseStockBalanceCommand))]
+[JsonSerializable(typeof(DecreaseStockProductsInBatchCommand))]
 [JsonSerializable(typeof(GetAllProductsQuery))]
 [JsonSerializable(typeof(GetProductByIdQuery))]
 [JsonSerializable(typeof(ApiResultDto<ProductDto>))] 

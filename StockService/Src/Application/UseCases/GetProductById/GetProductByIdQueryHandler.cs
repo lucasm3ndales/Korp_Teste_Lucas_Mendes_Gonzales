@@ -12,7 +12,7 @@ public class GetProductByIdQueryHandler(
 {
     public async Task<ApiResultDto<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await productRepository.GetByProductIdNoTracked(request.Id, cancellationToken);
+        var product = await productRepository.GetByIdNoTracked(request.Id, cancellationToken);
 
         if (product == null)
             throw new ProductNotExistsException();

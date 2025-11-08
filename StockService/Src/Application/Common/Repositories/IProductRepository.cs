@@ -13,9 +13,11 @@ public interface IProductRepository
     
     Task SaveChanges(CancellationToken cancellationToken);
     
-    Task<Product?> GetByProductIdNoTracked(ProductId id, CancellationToken cancellationToken);
+    Task<Product?> GetByIdNoTracked(ProductId id, CancellationToken cancellationToken);
     
-    Task<IEnumerable<Product>?> GetAllProducts(CancellationToken cancellationToken);
+    Task<IEnumerable<Product>?> ListAll(CancellationToken cancellationToken);
     
-    Task<IEnumerable<Product>?> GetAllProductsNoTracked(CancellationToken cancellationToken);
+    Task<IEnumerable<Product>?> ListAllNoTracked(CancellationToken cancellationToken);
+    
+    Task<IEnumerable<Product>?> GetProductsByIds(List<ProductId> ids, CancellationToken cancellationToken);
 }

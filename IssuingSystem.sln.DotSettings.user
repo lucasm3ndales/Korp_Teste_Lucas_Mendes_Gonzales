@@ -1,5 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ACancellationToken_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F2565b9d99fdde488bc7801b84387b2cc864959cfb63212e1ff576fc9c6bb7e_003FCancellationToken_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADbContextServices_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003Fc28655223245c8d433d4d4234c31c4b8a4fd871bd6a0e2268c726eb4db0d_003FDbContextServices_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AGuid_002EWindows_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003Fa42ba4db448ed38dcb9fb39194c637a317a8281856b88e139e8a905ee6d12b_003FGuid_002EWindows_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c073d3cf_002D7cc8_002D4b4c_002D90e1_002Df2a8bcba48f0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Should_CreateProduct" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
@@ -13,5 +14,11 @@
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Tests.DecreaseStockBalanceCommandHandlerUnitTests.Should_Throw_StockConcurrencyException_When_DbUpdateConcurrencyOccurs&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7::net8.0::StockService.Api.E2E.Tests.Endpoints.CreateProductE2ETests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7::net8.0::StockService.Api.E2E.Tests.Endpoints.Product.CreateProductE2ETests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.DecreaseStockProductsInBatchCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fb3dfd3e_002Dd074_002D4095_002Dbd9d_002Dbffcfbdeb983/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Deve retornar 201 Created quando o produto é válido" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.DecreaseStockProductsInBatchCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -6,9 +6,9 @@ using StockService.Domain.Exceptions;
 
 namespace StockService.Application.Common.Middlewares;
 
-public class GlobalExceptionMiddleware(
+public class HttpGlobalExceptionMiddleware(
     RequestDelegate next,
-    ILogger<GlobalExceptionMiddleware> logger
+    ILogger<HttpGlobalExceptionMiddleware> logger
 )
 {
     public async Task InvokeAsync(HttpContext context)

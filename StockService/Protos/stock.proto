@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+package StockManager.Grpc;
+
+service StockManager {
+  rpc DecreaseStockProductsInBatch (DecreaseStockProductsInBatchRequest) returns (DecreaseStockProductsInBatchResponse);
+}
+
+message DecreaseStockProductsInBatchRequest {
+  repeated StockItem items = 1;
+}
+
+message StockItem {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message DecreaseStockProductsInBatchResponse {
+  bool is_success = 1;        
+  repeated string messages = 2;
+  bool data = 3;
+}

@@ -39,7 +39,7 @@ public class ProductRepository(
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<Product?> GetByProductIdNoTracked(ProductId id, CancellationToken cancellationToken)
+    public async Task<Product?> GetByIdNoTracked(ProductId id, CancellationToken cancellationToken)
     {
         return await dbContext.Products
             .AsNoTracking()
@@ -47,18 +47,28 @@ public class ProductRepository(
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Product>?> GetAllProducts(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Product>?> ListAll(CancellationToken cancellationToken)
     {
         return await dbContext
             .Products
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Product>?> GetAllProductsNoTracked(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Product>?> ListAllNoTracked(CancellationToken cancellationToken)
     {
         return await dbContext
             .Products
             .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Product>?> GetProductsByIds(
+        List<ProductId> ids, 
+        CancellationToken cancellationToken)
+    {
+        return await dbContext
+            .Products
+            .Where(p => ids.Contains(p.Id))
             .ToListAsync(cancellationToken);
     }
 }

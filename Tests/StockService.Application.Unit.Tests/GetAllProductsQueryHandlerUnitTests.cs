@@ -33,7 +33,7 @@ public class GetAllProductsQueryHandlerTests
             new("FEX-123", "Leite", 20)
         };
 
-        _productRepositoryMock.Setup(r => r.GetAllProductsNoTracked(
+        _productRepositoryMock.Setup(r => r.ListAllNoTracked(
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(productList);
 
@@ -54,7 +54,7 @@ public class GetAllProductsQueryHandlerTests
         var query = new GetAllProductsQuery();
         var emptyList = new List<Product>();
 
-        _productRepositoryMock.Setup(r => r.GetAllProductsNoTracked(
+        _productRepositoryMock.Setup(r => r.ListAllNoTracked(
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(emptyList);
 

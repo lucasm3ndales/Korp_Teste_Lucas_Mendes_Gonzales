@@ -34,7 +34,7 @@ public class GetProductByIdQueryHandlerUnitTests
         // Criar um produto mockado
         var product = new Product("HCL-123", "Café", 10);
         
-        _productRepositoryMock.Setup(r => r.GetByProductIdNoTracked(
+        _productRepositoryMock.Setup(r => r.GetByIdNoTracked(
                 productId, 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(product);
@@ -56,7 +56,7 @@ public class GetProductByIdQueryHandlerUnitTests
         var productId = ProductId.NewId();
         var query = new GetProductByIdQuery(productId);
 
-        _productRepositoryMock.Setup(r => r.GetByProductIdNoTracked(
+        _productRepositoryMock.Setup(r => r.GetByIdNoTracked(
                 productId, 
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync((Product)null!);

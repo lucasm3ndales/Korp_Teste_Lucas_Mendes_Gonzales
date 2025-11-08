@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingService", "BillingSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Api.E2E.Tests", "tests\StockService.Api.E2E.Tests\StockService.Api.E2E.Tests.csproj", "{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Domain.Unit.Tests", "Tests\StockService.Domain.Unit.Tests\StockService.Domain.Unit.Tests.csproj", "{5D4B1671-F305-415E-82CE-61F159E96E7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockService.Application.Unit.Tests", "Tests\StockService.Application.Unit.Tests\StockService.Application.Unit.Tests.csproj", "{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}"
@@ -32,10 +30,6 @@ Global
 		{2962DE91-04AC-46BD-B559-F64D34CCD9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2962DE91-04AC-46BD-B559-F64D34CCD9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2962DE91-04AC-46BD-B559-F64D34CCD9E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D4B1671-F305-415E-82CE-61F159E96E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D4B1671-F305-415E-82CE-61F159E96E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D4B1671-F305-415E-82CE-61F159E96E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,7 +40,6 @@ Global
 		{FB3EE773-0733-421B-A2E7-9CF014DF3CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{692C8FE2-EC39-40EE-97A9-BB0E8A74EDA7} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
 		{5D4B1671-F305-415E-82CE-61F159E96E7C} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
 		{FB3EE773-0733-421B-A2E7-9CF014DF3CB9} = {83AFA823-CA4F-49EA-8DD6-9547D6C3EAB9}
 	EndGlobalSection

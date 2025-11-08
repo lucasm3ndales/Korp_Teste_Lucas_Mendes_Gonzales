@@ -29,6 +29,7 @@ public class InvoiceNote
         Id = InvoiceNoteId.NewId();
         NoteNumber = noteNumber;
         Status = InvoiceNoteStatus.OPEN; 
+        CreatedAt = DateTimeOffset.UtcNow;
     }
     
     public void AddItem(Guid productId, string code, string description, int quantity)
