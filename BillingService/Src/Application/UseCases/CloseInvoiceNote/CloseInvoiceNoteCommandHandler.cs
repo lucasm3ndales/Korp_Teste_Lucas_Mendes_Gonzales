@@ -55,6 +55,7 @@ public class CloseInvoiceNoteCommandHandler(
         }
 
         invoiceNote.Close();
+        invoiceNote.SetModified();
         await invoiceNoteRepository.SaveChanges(cancellationToken);
 
         return ApiResultDto<bool>.Success("Nota fiscal fechada com sucesso!", true);
