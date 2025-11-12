@@ -59,6 +59,7 @@ public class ProductRepository(
         return await dbContext
             .Products
             .AsNoTracking()
+            .OrderBy(i => i.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 
