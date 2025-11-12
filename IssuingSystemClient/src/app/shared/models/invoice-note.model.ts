@@ -7,7 +7,7 @@ export interface IInvoiceNote {
   status: InvoiceNoteStatus;
   createdAt: string;
   updatedAt: string;
-  rowVersion: number;
+  xmin: number;
   items: IInvoiceNoteItem[];
 }
 
@@ -23,5 +23,5 @@ export interface ICreateInvoiceNote {
 
 export interface ICloseInvoiceNote {
   id: string;
-  rowVersion: number;
+  xmin: number;
 }

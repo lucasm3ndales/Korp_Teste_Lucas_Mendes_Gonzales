@@ -79,7 +79,7 @@ export class InvoiceNoteDetailsDialogComponent implements OnInit, OnChanges, OnD
         nonNullable: false,
         validators: [Validators.required],
       }),
-      rowVersion: new FormControl(null, {
+      xmin: new FormControl(null, {
         validators: [Validators.required],
       })
     });
@@ -109,10 +109,10 @@ export class InvoiceNoteDetailsDialogComponent implements OnInit, OnChanges, OnD
         next: (result) => {
           if (result && result.isSuccess && result.data) {
 
-            const rowVersion = result.data.rowVersion;
+            const xmin = result.data.xmin;
 
-            if (rowVersion) {
-              this.closeInvoiceNoteForm.controls.rowVersion.setValue(rowVersion);
+            if (xmin) {
+              this.closeInvoiceNoteForm.controls.xmin.setValue(xmin);
             }
 
             this.invoiceNoteSub.next(result);

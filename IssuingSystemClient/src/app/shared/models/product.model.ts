@@ -3,7 +3,7 @@
   code: string;
   description: string;
   stockBalance: number;
-  rowVersion: string;
+  xmin: string;
   createdAt: string;
 }
 

@@ -10,5 +10,5 @@ export interface ICreateInvoiceNoteControls {
 export interface ICreateInvoiceNoteItemControls {
   productId: FormControl<ICreateInvoiceNoteItem['productId']>;
   quantity: FormControl<ICreateInvoiceNoteItem['quantity']>;
-  rowVersion: FormControl<ICreateInvoiceNoteItem['rowVersion']>;
+  xmin: FormControl<ICreateInvoiceNoteItem['xmin']>;
 }
