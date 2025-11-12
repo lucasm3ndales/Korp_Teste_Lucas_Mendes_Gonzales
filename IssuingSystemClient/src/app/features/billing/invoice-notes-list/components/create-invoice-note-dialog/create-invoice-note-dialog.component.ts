@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {
   FormArray,
   FormGroup,
@@ -13,7 +13,7 @@ import {IProduct} from '../../../../../shared/models/product.model';
 import {IApiResult} from '../../../../../shared/models/default.model';
 import {BillingService} from '../../../../../core/services/billing/billing.service';
 import {ICreateInvoiceNoteControls, ICreateInvoiceNoteItemControls} from './models/create-invoice-note-form.model';
-import {catchError, map, Observable, of, shareReplay, take, tap} from 'rxjs';
+import {catchError, map, Observable, of, shareReplay, tap} from 'rxjs';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {NumberFieldComponent} from '../../../../../shared/components/number-field/number-field.component';
@@ -37,7 +37,18 @@ import {SingleSelectComponent} from '../../../../../shared/components/single-sel
   styleUrl: './create-invoice-note-dialog.component.css',
 })
 export class CreateInvoiceNoteDialogComponent implements OnInit {
-  @Input() isOpen = false;
+  private _isOpen = false;
+  @Input()
+  set isOpen(value: boolean) {
+    this._isOpen = value;
+    if (value) {
+      this.loadProducts();
+    }
+  }
+  get isOpen(): boolean {
+    return this._isOpen;
+  }
+
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
 
@@ -59,6 +70,14 @@ export class CreateInvoiceNoteDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.invoiceNoteForm = this.fb.group({
+      items: this.fb.array<FormGroup<ICreateInvoiceNoteItemControls>>([], [Validators.required, Validators.minLength(1)])
+    });
+
+    this.loadProducts();
+  }
+
+  private loadProducts(): void {
     this.products$ = this.fetchProducts().pipe(
       shareReplay(1),
       tap(result => this.productList = result.data || [])
@@ -70,10 +89,6 @@ export class CreateInvoiceNoteDialogComponent implements OnInit {
         value: product.id
       })) || [])
     );
-
-    this.invoiceNoteForm = this.fb.group({
-      items: this.fb.array<FormGroup<ICreateInvoiceNoteItemControls>>([], [Validators.required, Validators.minLength(1)])
-    });
   }
 
   get itemsFormArray(): FormArray<FormGroup<ICreateInvoiceNoteItemControls>> {
