@@ -4,4 +4,5 @@ import {ICloseInvoiceNote} from '../../../../../../shared/models/invoice-note.mo
 
 export interface ICloseInvoiceNoteControls {
   id: FormControl<ICloseInvoiceNote['id'] | null>;
+  rowVersion: FormControl<ICloseInvoiceNote['rowVersion'] | null>;
 }

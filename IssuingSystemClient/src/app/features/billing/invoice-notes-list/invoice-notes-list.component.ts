@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {catchError, interval, merge, Observable, of, startWith, Subject, switchMap, take} from 'rxjs';
 import {IColumn} from '../../../shared/components/table/models/table.model';
 import {formatDate} from '../../../shared/utils/date.utils';
-import {IInvoiceNote, InvoiceNoteStatus, translateInvoiceNoteStatus} from '../../../shared/models/invoice-note.model';
+import {IInvoiceNote, InvoiceNoteStatus} from '../../../shared/models/invoice-note.model';
 import {IApiResult} from '../../../shared/models/default.model';
 import {ToastService} from '../../../core/services/snackbar/toast.service';
 import {BillingService} from '../../../core/services/billing/billing.service';

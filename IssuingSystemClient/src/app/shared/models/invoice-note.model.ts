@@ -7,6 +7,7 @@ export interface IInvoiceNote {
   status: InvoiceNoteStatus;
   createdAt: string;
   updatedAt: string;
+  rowVersion: number;
   items: IInvoiceNoteItem[];
 }
 
@@ -22,14 +23,5 @@ export interface ICreateInvoiceNote {
 
 export interface ICloseInvoiceNote {
   id: string;
+  rowVersion: number;
 }
-
-export const translateInvoiceNoteStatus = (value: InvoiceNoteStatus): string => {
-  const statusMap: Record<InvoiceNoteStatus, string> = {
-    [InvoiceNoteStatus.OPEN]: 'Aberta',
-    [InvoiceNoteStatus.CLOSED]: 'Fechada',
-    [InvoiceNoteStatus.PROCESSING]: 'Em Processamento',
-  };
-
-  return statusMap[value] || 'Desconhecido';
-};

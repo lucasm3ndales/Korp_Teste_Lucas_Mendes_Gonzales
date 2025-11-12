@@ -16,6 +16,7 @@ message DecreaseStockProductsInBatchRequest {
 message StockItem {
   string product_id = 1;
   int32 quantity = 2;
+  uint32 xmin = 3;
 }
 
 message DecreaseStockProductsInBatchResponse {

@@ -1,4 +1,5 @@
-﻿using BillingService.Domain.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using BillingService.Domain.Enums;
 using BillingService.Domain.Exceptions;
 using BillingService.Domain.ValueObjects;
 
@@ -16,8 +17,8 @@ public class InvoiceNote
     
     public DateTimeOffset UpdatedAt { get; private set; }
     
-    public byte[] RowVersion { get; private set; } = [];
-
+    public uint Xmin { get; private set; }
+    
     private readonly List<InvoiceNoteItem> _items = [];
     
     public IReadOnlyCollection<InvoiceNoteItem> Items => _items.AsReadOnly();
@@ -29,6 +30,8 @@ public class InvoiceNote
         CreatedAt = DateTimeOffset.UtcNow;
         UpdatedAt = DateTimeOffset.UtcNow;
     }
+    
+    public void SetXmin(uint xmin) =>  Xmin = xmin;
     
     public void AddItem(Guid productId, string code, string description, int quantity)
     {

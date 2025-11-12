@@ -1,6 +1,4 @@
-﻿
-
-export interface IInvoiceNoteItem {
+﻿export interface IInvoiceNoteItem {
   id: number;
   productId: string;
   productCode: string;
@@ -9,6 +7,7 @@ export interface IInvoiceNoteItem {
 }
 
 export interface ICreateInvoiceNoteItem {
-   productId: string;
-   quantity: number;
+  productId: string;
+  quantity: number;
+  rowVersion: number;
 }

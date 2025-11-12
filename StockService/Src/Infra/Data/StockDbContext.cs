@@ -35,9 +35,10 @@ public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContex
 
             entity.Property(p => p.StockBalance);
 
-            entity.Property(p => p.RowVersion)
-                .IsRowVersion()
-                .ValueGeneratedOnUpdate();
+            entity.Property(p => p.Xmin)
+                .HasColumnName("xmin")
+                .IsConcurrencyToken()
+                .ValueGeneratedOnAddOrUpdate();
         });
     }
 }

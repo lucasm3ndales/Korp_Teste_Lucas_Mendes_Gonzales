@@ -6,4 +6,6 @@ public class StockProductItemCommand()
 {
     public ProductId Id { get; init; }
     public int QuantityUsed { get; init; }
+    
+    public uint Xmin { get; init; }
 }

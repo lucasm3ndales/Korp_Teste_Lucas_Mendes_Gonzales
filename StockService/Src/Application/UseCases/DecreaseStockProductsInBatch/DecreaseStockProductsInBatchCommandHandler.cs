@@ -11,7 +11,7 @@ public class DecreaseStockProductsInBatchCommandHandler(
     IProductRepository productRepository
 ) : IRequestHandler<DecreaseStockProductsInBatchCommand, ApiResultDto<bool>>
 {
-   public async Task<ApiResultDto<bool>> Handle(DecreaseStockProductsInBatchCommand request,
+    public async Task<ApiResultDto<bool>> Handle(DecreaseStockProductsInBatchCommand request,
         CancellationToken cancellationToken)
     {
         try
@@ -19,34 +19,38 @@ public class DecreaseStockProductsInBatchCommandHandler(
             var items = request
                 .Items
                 .GroupBy(i => i.Id)
-                .Select(g => new 
+                .Select(g => new
                 {
                     ProductId = g.Key,
-                    TotalQuantityUsed = g.Sum(item => item.QuantityUsed)
+                    TotalQuantityUsed = g.Sum(item => item.QuantityUsed),
+                    Xmin = g.First().Xmin
                 })
                 .ToList();
 
             var productIds = items.Select(item => item.ProductId).ToList();
-            
+
             var products = await productRepository.GetByIds(productIds, cancellationToken);
-            
+
             var productDic = products.ToDictionary(p => p.Id);
-            
+
             foreach (var i in items)
             {
                 if (!productDic.TryGetValue(i.ProductId, out var p))
                     throw new ProductNotExistsException();
-                
+
                 if (p.StockBalance < i.TotalQuantityUsed)
-                    throw new InsufficientStockBalanceException(p.Code, p.StockBalance,  i.TotalQuantityUsed);
+                    throw new InsufficientStockBalanceException(p.Code, p.StockBalance, i.TotalQuantityUsed);
             }
-            
+
             foreach (var i in items)
             {
                 var p = productDic[i.ProductId];
+
+                p.SetXmin(i.Xmin);
+
                 p.DecreaseStockBalance(i.TotalQuantityUsed);
             }
-            
+
             await productRepository.SaveChanges(cancellationToken);
 
             return ApiResultDto<bool>.Success("Estoque atualizado com sucesso para todos os itens!", true);

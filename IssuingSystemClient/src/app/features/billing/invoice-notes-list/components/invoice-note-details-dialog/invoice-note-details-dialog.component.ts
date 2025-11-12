@@ -79,6 +79,9 @@ export class InvoiceNoteDetailsDialogComponent implements OnInit, OnChanges, OnD
         nonNullable: false,
         validators: [Validators.required],
       }),
+      rowVersion: new FormControl(null, {
+        validators: [Validators.required],
+      })
     });
   }
 
@@ -104,8 +107,16 @@ export class InvoiceNoteDetailsDialogComponent implements OnInit, OnChanges, OnD
       )
       .subscribe({
         next: (result) => {
-          if (result && result.isSuccess) {
+          if (result && result.isSuccess && result.data) {
+
+            const rowVersion = result.data.rowVersion;
+
+            if (rowVersion) {
+              this.closeInvoiceNoteForm.controls.rowVersion.setValue(rowVersion);
+            }
+
             this.invoiceNoteSub.next(result);
+
           } else if (result) {
             this.invoiceNoteSub.next(null);
           }

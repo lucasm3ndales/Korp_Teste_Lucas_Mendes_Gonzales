@@ -31,7 +31,8 @@ public class CloseInvoiceNoteCommandHandler(
 
         if (invoiceNote.Status != InvoiceNoteStatus.OPEN)
             throw new InvalidInvoiceNoteStatusException(invoiceNote.Status);
-
+        
+        invoiceNote.SetXmin(request.Xmin);
         await ChangeInvoiceNoteStatusToProcessing(invoiceNote, cancellationToken);
 
         var items = invoiceNote.Items.Select(i => new StockItem

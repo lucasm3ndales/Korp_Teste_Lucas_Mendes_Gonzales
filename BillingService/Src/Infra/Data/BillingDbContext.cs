@@ -36,9 +36,10 @@ public class BillingDbContext(DbContextOptions<BillingDbContext> options) : DbCo
                 .HasConversion<string>()
                 .HasMaxLength(20);
 
-            entity.Property(i => i.RowVersion)
-                .IsRowVersion()
-                .ValueGeneratedOnUpdate();
+            entity.Property(p => p.Xmin)
+                .HasColumnName("xmin")
+                .IsConcurrencyToken()
+                .ValueGeneratedOnAddOrUpdate();
             
             entity.HasMany(i => i.Items)
                 .WithOne()

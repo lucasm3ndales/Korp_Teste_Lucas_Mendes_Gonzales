@@ -1,4 +1,6 @@
-﻿using StockService.Domain.Exceptions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using StockService.Domain.Exceptions;
 using StockService.Domain.ValueObjects;
 
 namespace StockService.Domain.Entities;
@@ -13,7 +15,7 @@ public class Product: IEquatable<Product>
 
     public int StockBalance { get; private set; }
     
-    public byte[] RowVersion { get; private set; } = [];
+    public uint Xmin { get; private set; }
     
     public DateTimeOffset CreatedAt { get; private set; }
     
@@ -38,6 +40,8 @@ public class Product: IEquatable<Product>
         StockBalance = initialStockBalance;
         CreatedAt =  DateTimeOffset.UtcNow;
     }
+    
+    public void SetXmin(uint xmin) => Xmin = xmin;
     
     public void DecreaseStockBalance(int quantityUsed)
     {
