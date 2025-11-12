@@ -50,7 +50,6 @@ export class InvoiceNotesListComponent implements OnInit {
     {
       header: "Status",
       field: "status",
-      render: (status: InvoiceNoteStatus) => translateInvoiceNoteStatus(status),
     },
     {
       header: "Criada Em",

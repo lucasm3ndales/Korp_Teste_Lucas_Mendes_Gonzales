@@ -66,6 +66,10 @@ public class CloseInvoiceNoteCommandHandler(
         {
             await grpcClient.DecreaseStockProductsInBatchAsync(request);
         }
+        catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable)
+        {
+            throw new ServiceUnavailableException("Estoque", ex);
+        }
         catch (RpcException ex)
         {
             await RevertInvoiceStatusToOpen(invoiceNote, cancellationToken);

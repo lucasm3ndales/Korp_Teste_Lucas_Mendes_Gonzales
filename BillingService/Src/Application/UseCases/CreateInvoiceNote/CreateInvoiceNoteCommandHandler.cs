@@ -2,6 +2,7 @@
 using BillingService.Application.Common.Exceptions;
 using BillingService.Application.Common.Repositories;
 using BillingService.Domain.Entities;
+using Grpc.Core;
 using Mapster;
 using MediatR;
 using StockManager.Grpc;
@@ -56,16 +57,24 @@ public class CreateInvoiceNoteCommandHandler(
 
     private async Task<IEnumerable<ProductItem>> GetProductsByIds(List<string> productIds)
     {
-        var grpcRequest = new GetProductsByIdsRequest();
-        grpcRequest.ProductIds.AddRange(productIds);
+        try
+        {
+            var grpcRequest = new GetProductsByIdsRequest();
+            grpcRequest.ProductIds.AddRange(productIds);
 
-        var products = await grpcClient.GetProductsByIdsAsync(grpcRequest);
+            var products = await grpcClient.GetProductsByIdsAsync(grpcRequest);
 
-        if (!products.IsSuccess
-            || products.Data == null
-            || !products.Data.Any())
-            throw new InvoiceNoteProductsNotFoundException(products.Messages.ToList());
+            if (!products.IsSuccess
+                || products.Data == null
+                || !products.Data.Any())
+                throw new InvoiceNoteProductsNotFoundException(products.Messages.ToList());
 
-        return products.Data;
+            return products.Data;
+            
+        }
+        catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable)
+        {
+            throw new ServiceUnavailableException("Estoque", ex);
+        }
     }
 }

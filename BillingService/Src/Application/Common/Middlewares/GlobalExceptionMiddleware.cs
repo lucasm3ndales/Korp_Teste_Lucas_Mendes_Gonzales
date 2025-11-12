@@ -49,6 +49,11 @@ public class GlobalExceptionMiddleware(
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 apiResult = ApiResultDto<object>.Failure(ex.Message);
                 break;
+            
+            case ServiceUnavailableException:
+                context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
+                apiResult = ApiResultDto<object>.Failure(exception.Message);
+                break;
 
             case InvoiceNoteEmptyException:
             case InvoiceNoteItemsEmptyException:
