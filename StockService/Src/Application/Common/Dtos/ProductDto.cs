@@ -5,6 +5,6 @@ public record ProductDto(
     string Code,
     string Description,
     int StockBalance,
-    uint Xmin,
-    DateTimeOffset CreatedAt
+    DateTimeOffset CreatedAt,
+    uint Xmin
 );

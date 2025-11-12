@@ -49,7 +49,6 @@ export class CreateInvoiceNoteDialogComponent implements OnInit {
   private productList: IProduct[] = [];
   selectedProductId: string | null = null;
   tempQuantity = 1;
-  xmin = 0;
 
   constructor(
     private fb: NonNullableFormBuilder,
@@ -91,11 +90,10 @@ export class CreateInvoiceNoteDialogComponent implements OnInit {
     );
   }
 
-  createItemFormGroup(productId: string, quantity: number, xmin: number) {
+  createItemFormGroup(productId: string, quantity: number) {
     return this.fb.group<ICreateInvoiceNoteItemControls>({
       productId: this.fb.control(productId, Validators.required),
       quantity: this.fb.control(quantity, [Validators.required, Validators.min(1)]),
-      xmin: this.fb.control(xmin, [Validators.required]),
     });
   }
 
@@ -127,7 +125,7 @@ export class CreateInvoiceNoteDialogComponent implements OnInit {
       return;
     }
 
-    this.itemsFormArray.push(this.createItemFormGroup(this.selectedProductId, this.tempQuantity, this.xmin));
+    this.itemsFormArray.push(this.createItemFormGroup(this.selectedProductId, this.tempQuantity));
 
     this.selectedProductId = null;
     this.tempQuantity = 1;
@@ -142,7 +140,6 @@ export class CreateInvoiceNoteDialogComponent implements OnInit {
     this.itemsFormArray.clear();
     this.selectedProductId = null;
     this.tempQuantity = 1;
-    this.xmin = 0,
     this.isSaving = false;
   }
 

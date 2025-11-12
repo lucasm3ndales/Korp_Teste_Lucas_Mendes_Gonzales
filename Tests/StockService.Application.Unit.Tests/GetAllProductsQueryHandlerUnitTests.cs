@@ -16,10 +16,6 @@ public class GetAllProductsQueryHandlerTests
     {
         _productRepositoryMock = new Mock<IProductRepository>();
         _handler = new GetAllProductsQueryHandler(_productRepositoryMock.Object);
-
-        TypeAdapterConfig.GlobalSettings.Scan(typeof(GetAllProductsQueryHandler).Assembly);
-        TypeAdapterConfig<Product, ProductDto>.NewConfig()
-            .Map(dest => dest.Id, src => src.Id);
     }
 
     [Fact(DisplayName = "Deve retornar sucesso com lista de produtos quando existirem produtos")]

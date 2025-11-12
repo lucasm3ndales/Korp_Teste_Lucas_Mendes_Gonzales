@@ -26,9 +26,11 @@ public class StockManagerService(
                 return new StockProductItemCommand
                 {
                     Id = id,
-                    QuantityUsed = item.Quantity
+                    QuantityUsed = item.Quantity,
+                    Xmin = item.Xmin,
                 };
-            }).ToList()
+            }).ToList(),
+            InvoiceNoteId = Guid.TryParse(request.InvoiceNoteId,  out var id) ? id : Guid.Empty
         };
 
         var result = await mediator.Send(command, context.CancellationToken);

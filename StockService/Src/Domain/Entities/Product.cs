@@ -41,8 +41,6 @@ public class Product: IEquatable<Product>
         CreatedAt =  DateTimeOffset.UtcNow;
     }
     
-    public void SetXmin(uint xmin) => Xmin = xmin;
-    
     public void DecreaseStockBalance(int quantityUsed)
     {
         if (quantityUsed <= 0)

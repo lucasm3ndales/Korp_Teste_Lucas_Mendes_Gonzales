@@ -7,6 +7,7 @@ using Serilog;
 using StockService.Application.Common.Interceptors;
 using StockService.Application.Common.Middlewares;
 using StockService.Application.Common.Repositories;
+using StockService.Application.Common.Services.TransactionManager;
 using StockService.Infra.Data;
 using StockService.Infra.Repositories;
 using StockService.Presentation.Grpc;
@@ -53,7 +54,10 @@ builder.Services.AddDbContext<StockDbContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
     }
 );
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IIdempotencyKeyRepository, IdempotencyKeyRepository>();
+builder.Services.AddScoped<ITransactionManagerService, TransacationManagerService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

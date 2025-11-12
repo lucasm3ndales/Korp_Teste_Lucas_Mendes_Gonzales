@@ -9,5 +9,4 @@
 export interface ICreateInvoiceNoteItem {
   productId: string;
   quantity: number;
-  xmin: number;
 }

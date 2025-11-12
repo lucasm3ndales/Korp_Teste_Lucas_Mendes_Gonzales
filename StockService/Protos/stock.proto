@@ -11,6 +11,7 @@ service StockManager {
 
 message DecreaseStockProductsInBatchRequest {
   repeated StockItem items = 1;
+  string invoice_note_id = 2;
 }
 
 message StockItem {
@@ -20,7 +21,7 @@ message StockItem {
 }
 
 message DecreaseStockProductsInBatchResponse {
-  bool is_success = 1;        
+  bool is_success = 1;
   repeated string messages = 2;
   bool data = 3;
 }
@@ -41,4 +42,5 @@ message ProductItem {
   string description = 3;
   int32 stock_balance = 4;
   google.protobuf.Timestamp created_at = 5;
+  uint32 xmin = 6;
 }

@@ -7,4 +7,6 @@ public class CloseInvoiceNoteCommand: IRequest<ApiResultDto<bool>>
 {
     public Guid Id { get; init; }
     public uint Xmin { get; init; }
+    
+    public bool IsSyncProcess { get; set; } = false;
 }

@@ -17,7 +17,6 @@ public class CreateProductCommandHandlerUnitTests
     {
         _productRepositoryMock = new Mock<IProductRepository>();
         _handler = new CreateProductCommandHandler(_productRepositoryMock.Object);
-        TypeAdapterConfig.GlobalSettings.Scan(typeof(CreateProductCommandHandler).Assembly);
     }
 
     [Fact(DisplayName = "Deve retornar sucesso quando o código for único")]
@@ -89,6 +88,26 @@ public class CreateProductCommandHandlerUnitTests
 
         // Act & Assert
         await Assert.ThrowsAsync<InvalidProductStockBalanceException>(() =>
+            _handler.Handle(command, CancellationToken.None));
+
+        _productRepositoryMock.Verify(r => r.Add(
+            It.IsAny<Product>(),
+            It.IsAny<CancellationToken>()), Times.Never);
+    }
+    
+    [Fact(DisplayName = "Deve lançar DomainException quando o Código for inválido")]
+    public async Task Should_Throw_DomainException_When_CodeIsInvalid()
+    {
+        // Arrange
+        var command = new CreateProductCommand("", "Café", 10);
+
+        _productRepositoryMock.Setup(r => r.GetByCode(
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Product)null!);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<InvalidProductCodeException>(() =>
             _handler.Handle(command, CancellationToken.None));
 
         _productRepositoryMock.Verify(r => r.Add(

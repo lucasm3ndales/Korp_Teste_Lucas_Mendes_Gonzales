@@ -21,9 +21,6 @@ public class ProductIdTests
     [Fact(DisplayName = "Deve criar um ProductId válido ao chamar NewId")]
     public void Should_CreateValidProductId_When_CallingNewId()
     {
-        // Arrange
-        // No arrangement needed
-
         // Act
         var productId = ProductId.NewId();
 
@@ -75,5 +72,33 @@ public class ProductIdTests
 
         // Assert
         Assert.Equal(originalGuid, resultGuid);
+    }
+    
+    [Fact(DisplayName = "Deve converter implicitamente de Guid para ProductId")]
+    public void Should_ImplicitlyConvertFromGuid_When_AssignedToProductIdVariable()
+    {
+        // Arrange
+        var guid = Guid.NewGuid();
+
+        // Act
+        ProductId productId = guid;
+
+        // Assert
+        Assert.NotNull(productId);
+        Assert.Equal(guid, productId.Value);
+    }
+    
+    [Fact(DisplayName = "Deve criar um ProductId a partir de um Guid usando o método From")]
+    public void Should_CreateProductId_When_UsingFromMethod()
+    {
+        // Arrange
+        var guid = Guid.NewGuid();
+
+        // Act
+        var productId = ProductId.From(guid);
+
+        // Assert
+        Assert.NotNull(productId);
+        Assert.Equal(guid, productId.Value);
     }
 }

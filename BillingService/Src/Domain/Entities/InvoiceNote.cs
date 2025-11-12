@@ -31,8 +31,6 @@ public class InvoiceNote
         UpdatedAt = DateTimeOffset.UtcNow;
     }
     
-    public void SetXmin(uint xmin) =>  Xmin = xmin;
-    
     public void AddItem(Guid productId, string code, string description, int quantity)
     {
         if (Status != InvoiceNoteStatus.OPEN)
@@ -59,6 +57,9 @@ public class InvoiceNote
 
     public void Process()
     {
+        if (Status == InvoiceNoteStatus.PROCESSING)
+            return;
+        
         if (Status != InvoiceNoteStatus.OPEN)
             throw new InvalidInvoiceNoteStatusException(Status);
         

@@ -2,12 +2,12 @@ using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using BillingService.Application.Common.Middlewares;
-using BillingService.Config;
 using BillingService.Infra.Data;
 using BillingService.Presentation;
 using System.Reflection;
 using System.Text.Json;
 using BillingService.Application.Common.Repositories;
+using BillingService.Application.Common.Services.CloseInvoiceNoteProcess;
 using BillingService.Infra.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +40,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IInvoiceNoteRepository, InvoiceNoteRepository>();
+
+builder.Services.AddHostedService<CloseInvoiceNoteProcessService>();
 
 builder.Services.AddDbContext<BillingDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

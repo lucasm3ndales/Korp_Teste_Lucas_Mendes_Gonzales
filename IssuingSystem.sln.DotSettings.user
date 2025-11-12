@@ -2,12 +2,34 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ACancellationToken_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F2565b9d99fdde488bc7801b84387b2cc864959cfb63212e1ff576fc9c6bb7e_003FCancellationToken_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADbContextServices_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003Fc28655223245c8d433d4d4234c31c4b8a4fd871bd6a0e2268c726eb4db0d_003FDbContextServices_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AGuid_002EWindows_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003Fa42ba4db448ed38dcb9fb39194c637a317a8281856b88e139e8a905ee6d12b_003FGuid_002EWindows_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=161037ab_002D1089_002D4c27_002Db4ca_002D97a2c5385f6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ProductIdTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AMock_00601_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F337268366a89be4dda7d47b37063fd21841972237539397997c82c4f924b_003FMock_00601_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ARuntimeType_002ECoreCLR_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E2_003Fresharper_002Dhost_003FSourcesCache_003F955ec549fe664629353c3b5424b6ad6c7dfcec4ab59bae709ab962c228cf45_003FRuntimeType_002ECoreCLR_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=161037ab_002D1089_002D4c27_002Db4ca_002D97a2c5385f6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ProductIdTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::5D4B1671-F305-415E-82CE-61F159E96E7C::net8.0::StockService.Domain.Unit.Tests.ProductIdTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.DecreaseStockProductsInBatchCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.GetAllProductsQueryHandlerTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.CreateProductCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5D4B1671-F305-415E-82CE-61F159E96E7C::net8.0::StockService.Domain.Unit.Tests.ProductTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=541e0e01_002D3816_002D41d6_002Db345_002D3659f24b07e6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllProductsQueryHandlerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.GetAllProductsQueryHandlerTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.DecreaseStockProductsInBatchCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.GetProductsByIdsQueryHandlerUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::FB3EE773-0733-421B-A2E7-9CF014DF3CB9::net8.0::StockService.Application.Unit.Tests.CreateProductCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::581306A6-E3F6-4307-9490-61C31F99D4C6::net8.0::BillingService.Domain.Unit.Tests.InvoiceNoteUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::581306A6-E3F6-4307-9490-61C31F99D4C6::net8.0::BillingService.Domain.Unit.Tests.InvoiceNoteIdUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::581306A6-E3F6-4307-9490-61C31F99D4C6::net8.0::BillingService.Domain.Unit.Tests.InvoiceNoteItemUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7211B071-7245-4C87-8585-BF94579578D4::net8.0::BillingService.Application.Unit.Tests.GetInvoiceNoteByIdQueryHandlerUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7211B071-7245-4C87-8585-BF94579578D4::net8.0::BillingService.Application.Unit.Tests.GetAllInvoiceNotesQueryHandlerUnitTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7211B071-7245-4C87-8585-BF94579578D4::net8.0::BillingService.Application.Unit.Tests.CreateInvoiceNoteCommandHandlerUnitTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e764428c_002D7dee_002D44b4_002Db2e0_002D7ab890c174fb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Deve retornar sucesso e criar a nota fiscal quando produtos forem encontrados" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::7211B071-7245-4C87-8585-BF94579578D4::net8.0::BillingService.Application.Unit.Tests.CreateInvoiceNoteCommandHandlerUnitTests.Should_ReturnSuccessAndCreateInvoiceNote_When_ProductsAreFound&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

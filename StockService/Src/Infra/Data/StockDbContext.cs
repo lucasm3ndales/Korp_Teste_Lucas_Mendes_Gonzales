@@ -8,6 +8,8 @@ namespace StockService.Infra.Data;
 public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
+    
+    public DbSet<IdempotencyKey> IdempotencyKeys { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +41,11 @@ public class StockDbContext(DbContextOptions<StockDbContext> options) : DbContex
                 .HasColumnName("xmin")
                 .IsConcurrencyToken()
                 .ValueGeneratedOnAddOrUpdate();
+        });
+
+        modelBuilder.Entity<IdempotencyKey>(entity =>
+        {
+            entity.HasKey(e => e.Key);
         });
     }
 }

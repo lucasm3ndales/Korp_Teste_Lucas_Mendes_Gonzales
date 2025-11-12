@@ -47,20 +47,20 @@ public class ProductTests
     [InlineData(null)]
     [InlineData(" ")]
     [InlineData("")]
-    public void Should_Throw_InvalidProductStockBalanceException_When_DescriptionIsNullOrEmpty(string? invalidDescription)
+    public void Should_Throw_InvalidProductDescriptionException_When_DescriptionIsNullOrEmpty(string? invalidDescription)
     {
         // Act & Assert
         Assert.Throws<InvalidProductDescriptionException>(() => 
-            new Product("LXT-123", invalidDescription!, 10) // Adicionado '!' para suprimir aviso nulo
+            new Product("LXT-123", invalidDescription!, 10)
         );
     }
-    
+
     [Fact(DisplayName = "Deve lançar exceção quando a Descrição for muito longa")]
-    public void Should_Throw_InvalidProductStockBalanceException_When_DescriptionIsTooLong()
+    public void Should_Throw_InvalidProductDescriptionException_When_DescriptionIsTooLong()
     {
         // Arrange
         var description = new string('a', 256);
-        
+    
         // Act & Assert
         Assert.Throws<InvalidProductDescriptionException>(() => 
             new Product("LXT-123", description, 10)

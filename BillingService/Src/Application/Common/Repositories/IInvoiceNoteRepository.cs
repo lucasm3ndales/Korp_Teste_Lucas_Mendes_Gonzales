@@ -20,4 +20,8 @@ public interface IInvoiceNoteRepository
     Task<InvoiceNote?> GetByIdNoTracked(InvoiceNoteId id, CancellationToken cancellationToken);
 
     Task<IEnumerable<InvoiceNote>> ListAllNoTracked(CancellationToken cancellationToken);
+    
+    Task<IEnumerable<InvoiceNote>> GetProcessingInvoiceNotesOlderThan(
+        DateTimeOffset date, 
+        CancellationToken cancellationToken);
 }

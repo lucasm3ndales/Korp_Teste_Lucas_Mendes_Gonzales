@@ -31,7 +31,7 @@ import {Chip} from 'primeng/chip';
   styleUrl: './invoice-notes-list.component.css',
 })
 export class InvoiceNotesListComponent implements OnInit {
-  private readonly POLLING_INTERVAL = 30000;
+  private readonly POLLING_INTERVAL = 10000;
   readonly InvoiceNoteStatus = InvoiceNoteStatus;
   private refreshTrigger$ = new Subject<void>();
 

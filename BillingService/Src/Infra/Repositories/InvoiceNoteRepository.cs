@@ -1,5 +1,6 @@
 ﻿using BillingService.Application.Common.Repositories;
 using BillingService.Domain.Entities;
+using BillingService.Domain.Enums;
 using BillingService.Domain.ValueObjects;
 using BillingService.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -70,5 +71,14 @@ public class InvoiceNoteRepository(
     public async Task SaveChanges(CancellationToken cancellationToken)
     {
         await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<InvoiceNote>> GetProcessingInvoiceNotesOlderThan(DateTimeOffset date, CancellationToken cancellationToken)
+    {
+        return await dbContext
+            .InvoiceNotes
+            .Include(i => i.Items)
+            .Where(i => i.Status == InvoiceNoteStatus.PROCESSING && i.UpdatedAt < date)
+            .ToListAsync(cancellationToken: cancellationToken);
     }
 }

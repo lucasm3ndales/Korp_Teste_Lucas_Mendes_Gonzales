@@ -16,7 +16,7 @@ public class InvoiceNoteItem
     public string ProductDescription { get; private set; }
 
     public int Quantity { get; private set; }
-
+    
     protected InvoiceNoteItem() { }
 
     public InvoiceNoteItem(
