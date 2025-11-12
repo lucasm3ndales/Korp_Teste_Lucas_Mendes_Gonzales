@@ -4,6 +4,7 @@ using BillingService.Application.Common.Repositories;
 using BillingService.Domain.Entities;
 using BillingService.Domain.Enums;
 using BillingService.Domain.Exceptions;
+using Grpc.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using StockManager.Grpc;
@@ -42,17 +43,11 @@ public class CloseInvoiceNoteCommandHandler(
         var grpcRequest = new DecreaseStockProductsInBatchRequest();
         grpcRequest.Items.AddRange(items);
 
-        var grpcResponse = await SendDecreaseStockProductsInBatchRequest(
+        await SendDecreaseStockProductsInBatchRequest(
             invoiceNote,
             grpcRequest,
             cancellationToken
         );
-
-        if (!grpcResponse.IsSuccess)
-        {
-            await RevertInvoiceStatusToOpen(invoiceNote, cancellationToken);
-            throw new DecreaseStockProductsInBatchException(grpcResponse.Messages.ToList());
-        }
 
         invoiceNote.Close();
         invoiceNote.SetModified();
@@ -61,7 +56,7 @@ public class CloseInvoiceNoteCommandHandler(
         return ApiResultDto<bool>.Success("Nota fiscal fechada com sucesso!", true);
     }
 
-    private async Task<DecreaseStockProductsInBatchResponse> SendDecreaseStockProductsInBatchRequest(
+    private async Task SendDecreaseStockProductsInBatchRequest(
         InvoiceNote invoiceNote,
         DecreaseStockProductsInBatchRequest request,
         CancellationToken cancellationToken
@@ -69,12 +64,12 @@ public class CloseInvoiceNoteCommandHandler(
     {
         try
         {
-            return await grpcClient.DecreaseStockProductsInBatchAsync(request);
+            await grpcClient.DecreaseStockProductsInBatchAsync(request);
         }
-        catch (Exception ex)
+        catch (RpcException ex)
         {
             await RevertInvoiceStatusToOpen(invoiceNote, cancellationToken);
-            throw new ApplicationException($"Falha ao comunicar com o serviço de estoque: {ex.Message}", ex);
+            throw new DecreaseStockProductsInBatchException(ex.Status.Detail);
         }
     }
 

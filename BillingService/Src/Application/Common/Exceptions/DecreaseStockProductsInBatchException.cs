@@ -2,11 +2,8 @@
 
 public class DecreaseStockProductsInBatchException: BillingApplicationException
 {
-    public List<string> ErrorMessages { get; }
-    
-    public DecreaseStockProductsInBatchException(List<string> errorMessages)
-        : base(string.Join("; ", errorMessages))
+    public DecreaseStockProductsInBatchException(string message)
+        : base(message)
     {
-        ErrorMessages = errorMessages;
     }
 }

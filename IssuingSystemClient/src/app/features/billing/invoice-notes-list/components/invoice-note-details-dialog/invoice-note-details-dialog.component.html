@@ -1,0 +1,116 @@
+@if (isOpen) {
+  <p-dialog
+    header="Detalhes da Nota Fiscal"
+    [modal]="true"
+    [(visible)]="isOpen"
+    (onHide)="onClose()"
+    [closable]="false"
+    [style]="{ width: '40rem' }">
+
+    @if (isLoading && !(invoiceNote$ | async)) {
+      <div class="p-4 flex justify-center items-center">
+        <i class="pi pi-spin pi-spinner text-2xl text-shadow-tertiary"></i>
+        <span class="ml-3">Carregando detalhes...</span>
+      </div>
+
+    } @else if (invoiceNote$ | async; as invoiceNote) {
+      @if (!invoiceNote || !invoiceNote.data) {
+        <div class="p-4 text-center text-red-600">
+          Não foi possível carregar os detalhes da nota fiscal.
+        </div>
+      } @else {
+        <form [formGroup]="closeInvoiceNoteForm">
+
+          <div class="flex flex-col gap-4 p-1">
+            <div class="flex justify-between gap-4">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2">
+                  <p>Número Serial: </p>
+                  <span>{{ invoiceNote.data.noteNumber ?? 'Não fornecido' }}</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <p>Criada em: </p>
+                  <span>{{ formatDate(invoiceNote.data.createdAt) }}</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <p>Atualizada em: </p>
+                  <span>{{ formatDate(invoiceNote.data.updatedAt) }}</span>
+                </div>
+              </div>
+
+              <div class="flex flex-col">
+                <div class="flex items-center gap-2">
+                  <p>Status: </p>
+
+                  @if (isClosing) {
+                    <p-chip label="PROCESSANDO" icon="pi pi-spinner pi-spin" size="small" class="bg-blue-500/80 text-white"/>
+                  } @else if (invoiceNote.data.status === InvoiceNoteStatus.OPEN) {
+                    <p-chip label="ABERTA" icon="pi pi-receipt" size="small" class="bg-red-600/50 text-white"/>
+                  } @else if (invoiceNote.data.status === InvoiceNoteStatus.CLOSED) {
+                    <p-chip label="FECHADA" icon="pi pi-check-circle" size="small" class="bg-green-600/50 text-white"/>
+                  } @else {
+                    <p-chip label="DESCONHECIDO" icon="pi pi-cog" size="small" class="bg-gray-500/50 text-white"/>
+                  }
+                </div>
+              </div>
+            </div>
+
+            @if (invoiceNote.data.items && invoiceNote.data.items.length) {
+              <div class="mt-2">
+                <h3 class="font-bold text-lg mb-2 text-tertiary">Itens da Nota ({{ invoiceNote.data.items.length }})</h3>
+
+                <div class="max-h-48 overflow-y-auto rounded-lg p-4 bg-secondary/50 border border-gray-300">
+
+                  <div class="grid grid-cols-3 font-semibold text-sm border-b pb-1 mb-1 sticky top-0 z-10">
+                    <span class="text-center">Código</span>
+                    <span class="text-center">Descrição</span>
+                    <span class="text-center">Quantidade</span>
+                  </div>
+
+                  @for (item of invoiceNote.data.items; track item.productCode) {
+                    <div class="grid grid-cols-3 py-1 text-sm border-b last:border-b-0">
+                      <span class="text-center font-medium">{{ item.productCode }}</span>
+                      <span class="text-center text-tertiary truncate px-1">{{ item.productDescription }}</span>
+                      <span class="text-center">{{ item.quantity }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            } @else {
+              <div class="p-message p-message-info mt-2">
+                <div class="p-message-wrapper">
+                  <span class="p-message-text">Nenhum item encontrado nesta nota fiscal.</span>
+                </div>
+              </div>
+            }
+
+
+            <div class="flex justify-end gap-2 mt-3 pt-2">
+              <p-button
+                label="Cancelar"
+                (click)="onClose()"
+                styleClass="bg-secondary/20 text-tertiary hover:bg-secondary/50 border-none px-10"
+                type="button"
+                [disabled]="isLoading || isClosing"
+              />
+
+              @if (invoiceNote.data.status === InvoiceNoteStatus.OPEN) {
+                <p-button
+                  label="Fechar Nota"
+                  (click)="closeInvoiceNote()"
+                  styleClass="bg-accent text-secondary border-accent hover:bg-secondary hover:text-tertiary px-10"
+                  loadingIcon="pi pi-spin"
+
+                  [disabled]="closeInvoiceNoteForm.invalid || isLoading || isClosing"
+                  [loading]="isClosing"
+                />
+              }
+            </div>
+          </div>
+        </form>
+      }
+    }
+  </p-dialog>
+}

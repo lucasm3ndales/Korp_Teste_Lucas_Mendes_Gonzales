@@ -5,5 +5,6 @@ public record InvoiceNoteDto(
     long NoteNumber,
     string Status,
     DateTimeOffset CreatedAt,
+    DateTimeOffset UpdatedAt,
     IEnumerable<InvoiceNoteItemDto> Items
 );

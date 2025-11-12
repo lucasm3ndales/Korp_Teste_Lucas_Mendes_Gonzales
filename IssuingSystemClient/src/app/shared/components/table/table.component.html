@@ -1,0 +1,54 @@
+<div class="shadow-lg rounded-lg">
+  <p-table
+    [value]="rows"
+    [tableStyle]="{'min-width': '60rem'}"
+  >
+    <ng-template pTemplate="header">
+      <tr class="uppercase text-sm leading-normal">
+
+        @for (col of columns; track col.field) {
+          <th
+            [ngStyle]="{'width': col.width || 'auto'}"
+            class="py-3 px-6 text-left font-semibold"
+          >
+            {{ col.header }}
+          </th>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+      <tr class="hover:bg-gray-400">
+
+        @for (col of columns; track col.field) {
+          <td
+            class="py-3 px-6 text-left whitespace-nowrap text-sm"
+          >
+            @if (col.field === 'id' && detailsTemplate.first) {
+              <ng-container
+                *ngTemplateOutlet="detailsTemplate.first; context: { $implicit: rowData }"
+              />
+            } @else if (col.field === 'status' && statusTemplate.first) {
+              <ng-container
+                *ngTemplateOutlet="statusTemplate.first; context: { $implicit: rowData }"
+              />
+            } @else if (col.render) {
+              <span [innerHTML]="col.render(rowData[col.field])"></span>
+            } @else {
+              {{ rowData[col.field] }}
+            }
+          </td>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columns.length" class="text-center py-4 bg-primary">
+          Nenhum item encontrado.
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

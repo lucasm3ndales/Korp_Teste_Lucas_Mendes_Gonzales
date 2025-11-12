@@ -5,11 +5,11 @@ using StockService.Application.UseCases.GetAllProducts;
 
 namespace StockService.Presentation.Http;
 
-public static class ProductEndpoints
+public static class StockEndpoints
 {
     public static void MapV1ProductRoutes(this IEndpointRouteBuilder app)
     {
-        var api = app.MapGroup("/api/v1/products").WithTags("Products");
+        var api = app.MapGroup("/api/stock/v1/products").WithTags("Products");
 
         api.MapPost("/", async (
             [FromBody] CreateProductCommand command,

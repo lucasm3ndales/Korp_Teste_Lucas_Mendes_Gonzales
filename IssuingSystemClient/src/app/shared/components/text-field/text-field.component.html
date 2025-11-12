@@ -1,0 +1,55 @@
+<div class="mb-3">
+  @if (label) {
+    <label
+      [attr.for]="label"
+      class="block text-sm font-medium text-tertiary mb-1"
+    >
+      {{ label }}
+      @if (required) {
+        <span class="text-red-600">*</span>
+      }
+    </label>
+  }
+
+  <input
+    pInputText
+    [id]="id"
+    [type]="type"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [required]="required"
+    [ngModel]="value"
+    (ngModelChange)="onModelChange($event)"
+    (blur)="onTouched()"
+    class="w-full border border-gray-400 bg-secondary/50 rounded-md
+    shadow-sm focus:outline-none focus:ring-accent focus:border-accent
+    transition duration-150 ease-in-out"
+  />
+
+  @if (shouldShowErrors) {
+    <div class="mt-1 text-sm text-red-600">
+      @if (ngControl.errors?.['required']) {
+        <p>Este campo é obrigatório.</p>
+      }
+
+      @if (ngControl.errors?.['minlength']) {
+        <p>
+          Mínimo de {{ ngControl.errors?.['minlength'].requiredLength }} caracteres
+          (encontrado: {{ ngControl.errors?.['minlength'].actualLength }}).
+        </p>
+      }
+
+      @if (ngControl.errors?.['maxlength']) {
+        <p>
+          Máximo de {{ ngControl.errors?.['maxlength'].requiredLength }} caracteres
+          (encontrado: {{ ngControl.errors?.['maxlength'].actualLength }}).
+        </p>
+      }
+
+      @if (ngControl.errors?.['email']) {
+        <p>Formato de e-mail inválido.</p>
+      }
+
+    </div>
+  }
+</div>

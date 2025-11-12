@@ -1,0 +1,53 @@
+@if (isOpen) {
+  <p-dialog
+    header="Novo Produto"
+    [modal]="true"
+    [(visible)]="isOpen"
+    [closable]="false"
+    [style]="{ width: '30rem' }">
+    <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+      <div class="flex flex-col justify-center">
+
+        <app-text-field
+          label="Código"
+          formControlName="code"
+          [minlength]="1"
+          [maxlength]="20"
+          [required]="true"
+        />
+
+        <app-text-field
+          label="Descrição"
+          formControlName="description"
+          [minlength]="1"
+          [maxlength]="255"
+          [required]="true"
+        />
+
+        <app-number-field
+          label="Quantidade no Estoque"
+          formControlName="initialStockBalance"
+          ngDefaultControl
+          [required]="true"
+          [min]="0"
+        />
+      </div>
+
+      <div class="flex justify-end gap-2 mt-4">
+        <p-button
+          label="Fechar"
+          (click)="closeDialog()"
+          styleClass="bg-secondary/20 text-tertiary hover:bg-secondary/50 border-none px-10"
+          type="button" />
+        <p-button
+          label="Salvar"
+          type="submit" styleClass="bg-accent text-secondary hover:bg-secondary hover:text-white border-accent px-10"
+          loadingIcon="pi pi-"
+          [disabled]="productForm.invalid"
+          [loading]="isSaving"
+        />
+      </div>
+    </form>
+  </p-dialog>
+}
+

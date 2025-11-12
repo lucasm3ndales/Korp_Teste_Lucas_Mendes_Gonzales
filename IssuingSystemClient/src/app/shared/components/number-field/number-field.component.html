@@ -1,0 +1,52 @@
+<div class="mb-3">
+  @if (label) {
+    <label
+      [attr.for]="label"
+      class="block text-sm font-medium text-tertiary mb-1"
+    >
+      {{ label }}
+      @if (required) {
+        <span class="text-red-600">*</span>
+      }
+    </label>
+  }
+
+  <p-inputNumber
+    [id]="id"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [required]="required"
+    [min]="min"
+    [max]="max"
+    [(ngModel)]="value"
+    (ngModelChange)="onModelChange($event)"
+    (onBlur)="onTouched()"
+    [class.border-red-500]="shouldShowErrors"
+    [class.focus:ring-red-500]="shouldShowErrors"
+    class="w-full"
+    inputStyleClass="border border-gray-400 bg-secondary/50 rounded-md
+    shadow-sm focus:outline-none focus:ring-accent focus:border-accent
+    transition duration-150 ease-in-out"
+  >
+  </p-inputNumber>
+
+  @if (shouldShowErrors) {
+    <div class="mt-1 text-sm text-red-600">
+      @if (ngControl.errors?.['required']) {
+        <p>Este campo é obrigatório.</p>
+      }
+
+      @if (ngControl.errors?.['min']) {
+        <p>
+          O valor mínimo permitido é {{ ngControl.errors?.['min'].min }}.
+        </p>
+      }
+
+      @if (ngControl.errors?.['max']) {
+        <p>
+          O valor máximo permitido é {{ ngControl.errors?.['max'].max }}.
+        </p>
+      }
+    </div>
+  }
+</div>

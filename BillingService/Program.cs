@@ -6,6 +6,7 @@ using BillingService.Config;
 using BillingService.Infra.Data;
 using BillingService.Presentation;
 using System.Reflection;
+using System.Text.Json;
 using BillingService.Application.Common.Repositories;
 using BillingService.Infra.Repositories;
 
@@ -55,6 +56,13 @@ builder.Services.AddGrpcClient<StockManager.Grpc.StockManager.StockManagerClient
     options.Address = new Uri(stockServiceUrl);
 });
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -70,7 +78,7 @@ app.UseSerilogRequestLogging();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
-app.MapV1BillingRoutes();
+app.MapV1InvoiceNoteRoutes();
 
 app.Run();
 

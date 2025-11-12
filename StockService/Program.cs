@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -53,6 +54,13 @@ builder.Services.AddDbContext<StockDbContext>(options =>
     }
 );
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 var app = builder.Build();
 

@@ -47,7 +47,7 @@ public class GlobalExceptionMiddleware(
 
             case DecreaseStockProductsInBatchException ex:
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                apiResult = ApiResultDto<object>.Failure(ex.ErrorMessages);
+                apiResult = ApiResultDto<object>.Failure(ex.Message);
                 break;
 
             case InvoiceNoteEmptyException:
@@ -68,7 +68,12 @@ public class GlobalExceptionMiddleware(
                 break;
         }
 
-        var jsonResponse = JsonSerializer.Serialize(apiResult);
+        var serializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        
+        var jsonResponse = JsonSerializer.Serialize(apiResult, serializerOptions);
         await context.Response.WriteAsync(jsonResponse);
     }
 }

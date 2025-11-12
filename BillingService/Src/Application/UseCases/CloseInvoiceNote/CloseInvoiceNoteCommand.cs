@@ -1,5 +1,5 @@
 ﻿using BillingService.Application.Common;
-using MediatR;
+using MediatR;  
 
 namespace BillingService.Application.UseCases.CloseInvoiceNote;
 

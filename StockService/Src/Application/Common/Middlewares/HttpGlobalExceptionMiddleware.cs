@@ -71,8 +71,13 @@ public class HttpGlobalExceptionMiddleware(
                 apiResult = ApiResultDto<object>.Failure("Ocorreu um erro inesperado no servidor.");
                 break;
         }
-
-        var jsonResponse = JsonSerializer.Serialize(apiResult);
+        
+        var serializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        
+        var jsonResponse = JsonSerializer.Serialize(apiResult, serializerOptions);
         await context.Response.WriteAsync(jsonResponse);
     }
 }

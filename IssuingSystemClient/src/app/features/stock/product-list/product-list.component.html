@@ -1,0 +1,35 @@
+<div class="flex flex-col w-full p-2 gap-4">
+  @if (products$ | async; as apiResult) {
+
+    <div class="flex">
+      <p-button
+        icon="pi pi-plus"
+        label="Novo Produto"
+        styleClass="bg-primary text-tertiary shadow-md border-none hover:bg-accent hover:text-secondary"
+        (click)="openCreateProductDialog()"
+      />
+    </div>
+
+    <div class="flex w-full">
+      @if (apiResult.data && apiResult.data.length > 0) {
+
+        <app-table
+          [columns]="COLUMNS"
+          [rows]="apiResult.data">
+        </app-table>
+
+      } @else if (apiResult.data && apiResult.data.length === 0) {
+        <p class="text-secondary p-4 w-full text-nowrap">Não há produtos no estoque.</p>
+      }
+    </div>
+
+  } @else {
+      <p class="p-4 text-secondary w-full text-nowrap">Carregando lista de produtos...</p>
+  }
+
+  <app-create-product-dialog
+    [isOpen]="showCreateDialog"
+    (save)="closeCreateProductDialog(true)"
+    (close)="closeCreateProductDialog(false)"
+  />
+</div>

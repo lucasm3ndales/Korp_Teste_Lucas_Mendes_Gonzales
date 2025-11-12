@@ -1,1 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@import "primeicons/primeicons.css";
+
+@theme {
+  --color-primary: #2B485A;
+  --color-secondary: #0F0F0F;
+  --color-accent: #FB7397;
+  --color-tertiary: #FFFFFF;
+}
+
+html,
+body {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #b1b1b1 !important;
+}
+
+.p-datatable {
+  @apply rounded-lg shadow-md;
+  font-size: 0.95rem;
+  overflow-y: auto;
+  max-height: 35rem;
+}
+
+.p-datatable-thead > tr > th {
+  @apply bg-primary text-tertiary font-bold;
+  padding: 1rem 1.25rem;
+  text-transform: uppercase;
+}
+
+.p-datatable-tbody > tr {
+  background-color: var(--color-primary);
+  color: var(--color-tertiary);
+  transition: background-color 0.15s ease-in-out;
+}
+
+.p-datatable-tbody > tr > td {
+  padding: 0.45rem 1.25rem;
+}
+
+.p-datatable-tbody > tr:hover {
+  @apply bg-secondary text-tertiary;
+  cursor: pointer;
+}
+
+.p-datatable-tbody > tr.p-highlight {
+  @apply bg-accent text-secondary font-medium;
+}
+
+.p-datatable-emptymessage > td {
+  @apply text-center text-white italic;
+  padding: 2rem 0;
+}
+
+.p-component-overlay {
+  @apply bg-black/70;
+}
+
+.p-dialog {
+  @apply shadow-2xl rounded-xl bg-primary;
+}
+
+.p-dialog-content {
+  @apply p-4;
+}
+
+
+.p-dialog-close-button {
+  @apply bg-transparent hover:bg-secondary/20 text-tertiary hover:text-accent;
+}

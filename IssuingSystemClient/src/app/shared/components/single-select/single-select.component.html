@@ -1,0 +1,23 @@
+<div class="mb-6">
+  <label [for]="id" class="block text-sm font-medium text-tertiary mb-2">
+    {{ label }}
+    @if (required) {
+      <span class="text-red-600">*</span>
+    }
+  </label>
+
+  <p-select
+    [options]="items"
+    optionLabel="label"
+    optionValue="value"
+    [placeholder]="placeholder"
+    [inputId]="id"
+    [required]="required"
+    [disabled]="disabled"
+    [(ngModel)]="value"
+    (onBlur)="onTouched()"
+    class="text-tertiary  border-gray-400 rounded-lg
+    shadow-sm bg-secondary/50 hover:border-accent"
+    [style]="{'width': '100%'}"
+  />
+</div>

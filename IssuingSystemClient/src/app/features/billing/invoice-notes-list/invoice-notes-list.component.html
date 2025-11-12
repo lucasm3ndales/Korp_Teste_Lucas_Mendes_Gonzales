@@ -1,0 +1,68 @@
+<div class="flex flex-col w-full p-4 gap-4">
+
+  <div class="flex justify-start">
+    @if (invoiceNotes$ | async) {
+      <p-button
+        icon="pi pi-plus"
+        label="Nova Nota Fiscal"
+        styleClass="bg-primary text-tertiary shadow-md border-none hover:bg-accent hover:text-secondary"
+        (click)="openCreateInvoiceNoteDialog()"
+      />
+    }
+  </div>
+
+  <div class="flex w-full">
+    @if (invoiceNotes$ | async; as apiResult) {
+
+      @if (apiResult.data && apiResult.data.length > 0) {
+
+        <app-table [columns]="COLUMNS" [rows]="apiResult.data">
+
+          <ng-template #detailsTemplate let-invoiceNote>
+            <p-button
+              label="Detalhes"
+              icon="pi pi-search"
+              severity="info"
+              styleClass="bg-accent text-secondary hover:bg-secondary hover:text-white border-accent px-4 py-2"
+              (onClick)="openInvoiceNoteDetailsDialog(invoiceNote.id)"
+            />
+          </ng-template>
+
+          <ng-template #statusTemplate let-invoiceNote>
+            <div class="flex items-center gap-2">
+              @if (invoiceNote.status === InvoiceNoteStatus.OPEN) {
+                <p-chip label="ABERTA" icon="pi pi-receipt" size="small" class="bg-red-600/50"/>
+              } @else if (invoiceNote.status === InvoiceNoteStatus.CLOSED) {
+                <p-chip label="FECHADA" icon="pi pi-check-circle" size="small" class="bg-green-600/50"/>
+              } @else {
+                <p-chip label="PROCESSANDO" icon="pi pi-cog" size="small" class="bg-blue-500/50"/>
+              }
+            </div>
+          </ng-template>
+
+        </app-table>
+
+      } @else {
+        <p class="text-secondary p-4 w-full text-center">Não há notas fiscais no momento.</p>
+      }
+
+    } @else {
+        <p class="p-4 text-secondary w-full text-center">Carregando lista de notas fiscais...</p>
+    }
+
+  </div>
+
+  <app-create-invoice-note-dialog
+    [isOpen]="showCreateDialog"
+    (save)="closeCreateInvoiceNoteDialog(true)"
+    (close)="closeCreateInvoiceNoteDialog(false)"
+  />
+
+  <app-invoice-note-details-dialog
+    [isOpen]="showDetailsDialog"
+    [invoiceNoteId]="selectedInvoiceNoteId"
+    (close)="closeInvoiceNoteDetailsDialog()"
+    (invoiceNoteClosed)="refreshInvoiceNotes()"
+  />
+
+</div>
